@@ -1,6 +1,7 @@
 package top.yang.mapper;
 
 import java.util.List;
+import org.apache.ibatis.annotations.Mapper;
 import top.yang.domain.entity.GenTable;
 import top.yang.repository.BaseJdbcRepository;
 
@@ -8,7 +9,7 @@ import top.yang.repository.BaseJdbcRepository;
  * 业务 数据层
  *
  * @author ruoyi
- */
+ */@Mapper
 public interface GenTableMapper extends BaseJdbcRepository<GenTable, Long> {
 
   /**
@@ -58,20 +59,5 @@ public interface GenTableMapper extends BaseJdbcRepository<GenTable, Long> {
    */
   public GenTable selectGenTableByName(String tableName);
 
-  /**
-   * 新增业务
-   *
-   * @param genTable 业务信息
-   * @return 结果
-   */
-  public int insertGenTable(GenTable genTable);
-
-  /**
-   * 修改业务
-   *
-   * @param genTable 业务信息
-   * @return 结果
-   */
-  public int updateGenTable(GenTable genTable);
 
 }

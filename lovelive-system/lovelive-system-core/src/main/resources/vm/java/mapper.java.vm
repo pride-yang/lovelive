@@ -36,7 +36,7 @@ public interface ${ClassName}Mapper
      * @param ${className} ${functionName}
      * @return 结果
      */
-    public int insert${ClassName}(${ClassName} ${className});
+
 
     /**
      * 修改${functionName}

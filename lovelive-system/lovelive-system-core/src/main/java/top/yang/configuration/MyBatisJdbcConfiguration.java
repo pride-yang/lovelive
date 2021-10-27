@@ -43,7 +43,7 @@ public class MyBatisJdbcConfiguration extends AbstractJdbcConfiguration {
   public DataAccessStrategy dataAccessStrategyBean(NamedParameterJdbcOperations operations, JdbcConverter jdbcConverter,
       JdbcMappingContext context, Dialect dialect) {
 
-    return MyBatisDataAccessStrategy.createCombinedAccessStrategy(context, jdbcConverter, operations, session, new MybatisNamespaceStrategy(), dialect);
+    return MyBatisDataAccessStrategy.createCombinedAccessStrategy(context, jdbcConverter, operations, session, new MybatisNamespaceStrategy(), new MySqlDialect());
   }
 
   /**

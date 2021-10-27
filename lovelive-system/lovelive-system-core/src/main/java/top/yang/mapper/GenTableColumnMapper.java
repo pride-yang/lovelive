@@ -2,6 +2,8 @@ package top.yang.mapper;
 
 
 import java.util.List;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import top.yang.domain.entity.GenTable;
 import top.yang.domain.entity.GenTableColumn;
 import top.yang.repository.BaseJdbcRepository;
@@ -11,6 +13,7 @@ import top.yang.repository.BaseJdbcRepository;
  *
  * @author ruoyi
  */
+@Mapper
 public interface GenTableColumnMapper extends BaseJdbcRepository<GenTableColumn, Long> {
 
   /**
@@ -29,28 +32,5 @@ public interface GenTableColumnMapper extends BaseJdbcRepository<GenTableColumn,
    */
   public List<GenTableColumn> selectGenTableColumnListByTableId(Long tableId);
 
-  /**
-   * 新增业务字段
-   *
-   * @param genTableColumn 业务字段信息
-   * @return 结果
-   */
-  public int insertGenTableColumn(GenTableColumn genTableColumn);
-
-  /**
-   * 修改业务字段
-   *
-   * @param genTableColumn 业务字段信息
-   * @return 结果
-   */
-  public int updateGenTableColumn(GenTableColumn genTableColumn);
-
-  /**
-   * 删除业务字段
-   *
-   * @param genTableColumns 列数据
-   * @return 结果
-   */
-  public int deleteGenTableColumns(List<GenTableColumn> genTableColumns);
 
 }

@@ -47,6 +47,7 @@ public class SysPost extends BaseEntity {
    * 用户是否存在此岗位标识 默认不存在
    */
   private boolean flag = false;
-
+  private String createBy;
+  private String updateBy;
  
 }

@@ -116,5 +116,6 @@ public class SysOperLog extends BaseEntity {
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 
   private Date operTime;
-
+  private String createBy;
+  private String updateBy;
 }

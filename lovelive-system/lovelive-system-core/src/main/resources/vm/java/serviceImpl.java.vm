@@ -65,7 +65,7 @@ public class ${ClassName}ServiceImpl implements I${ClassName}Service
     @Transactional
 #end
     @Override
-    public int insert${ClassName}(${ClassName} ${className})
+
     {
 #foreach ($column in $columns)
 #if($column.javaField == 'createTime')

@@ -9,7 +9,8 @@ import top.yang.pojo.BaseEntity;
  * 系统访问记录表 sys_logininfor
  *
  * @author ruoyi
- */@Data
+ */
+@Data
 public class SysLogininfor extends BaseEntity {
 
 
@@ -66,5 +67,6 @@ public class SysLogininfor extends BaseEntity {
    */
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   private Date loginTime;
-
+  private String createBy;
+  private String updateBy;
 }

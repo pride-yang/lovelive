@@ -13,7 +13,6 @@ import top.yang.pojo.BaseEntity;
 @Data
 public class SysConfig extends BaseEntity {
 
-  
 
   /**
    * 参数主键
@@ -44,5 +43,8 @@ public class SysConfig extends BaseEntity {
    */
 
   private String configType;
+
+  private String createBy;
+  private String updateBy;
 
 }

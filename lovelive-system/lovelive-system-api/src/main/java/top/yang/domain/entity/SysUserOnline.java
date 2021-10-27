@@ -50,4 +50,6 @@ public class SysUserOnline extends BaseBean {
    * 登录时间
    */
   private Long loginTime;
+  private String createBy;
+  private String updateBy;
 }

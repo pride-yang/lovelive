@@ -2,6 +2,8 @@ package top.yang.domain.entity;
 
 import java.util.List;
 import lombok.Data;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Table;
 import top.yang.collections.ArrayUtils;
 import top.yang.constants.GenConstants;
 import top.yang.pojo.BaseEntity;
@@ -14,12 +16,14 @@ import top.yang.string.StringUtils;
  * @author ruoyi
  */
 @Data
+@Table()
 public class GenTable extends BaseEntity {
 
 
   /**
    * 编号
    */
+  @Id
   private Long tableId;
 
   /**
