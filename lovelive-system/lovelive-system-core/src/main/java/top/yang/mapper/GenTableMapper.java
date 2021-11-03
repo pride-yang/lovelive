@@ -3,13 +3,15 @@ package top.yang.mapper;
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import top.yang.domain.entity.GenTable;
+import top.yang.domain.query.GenTableQuery;
 import top.yang.repository.BaseJdbcRepository;
 
 /**
  * 业务 数据层
  *
  * @author ruoyi
- */@Mapper
+ */
+@Mapper
 public interface GenTableMapper extends BaseJdbcRepository<GenTable, Long> {
 
   /**
@@ -18,7 +20,7 @@ public interface GenTableMapper extends BaseJdbcRepository<GenTable, Long> {
    * @param genTable 业务信息
    * @return 业务集合
    */
-  public List<GenTable> selectGenTableList(GenTable genTable);
+  public List<GenTable> findGenTableList(GenTableQuery genTable);
 
   /**
    * 查询据库列表
@@ -26,7 +28,7 @@ public interface GenTableMapper extends BaseJdbcRepository<GenTable, Long> {
    * @param genTable 业务信息
    * @return 数据库表集合
    */
-  public List<GenTable> selectDbTableList(GenTable genTable);
+  public List<GenTable> findDbTableList(GenTable genTable);
 
   /**
    * 查询据库列表
@@ -34,14 +36,14 @@ public interface GenTableMapper extends BaseJdbcRepository<GenTable, Long> {
    * @param tableNames 表名称组
    * @return 数据库表集合
    */
-  public List<GenTable> selectDbTableListByNames(String[] tableNames);
+  public List<GenTable> findDbTableListByNames(List<String> tableNames);
 
   /**
    * 查询所有表信息
    *
    * @return 表信息集合
    */
-  public List<GenTable> selectGenTableAll();
+  public List<GenTable> findGenTableAll();
 
   /**
    * 查询表ID业务信息
@@ -49,7 +51,7 @@ public interface GenTableMapper extends BaseJdbcRepository<GenTable, Long> {
    * @param id 业务ID
    * @return 业务信息
    */
-  public GenTable selectGenTableById(Long id);
+  public GenTable findGenTableById(Long id);
 
   /**
    * 查询表名称业务信息
@@ -57,7 +59,8 @@ public interface GenTableMapper extends BaseJdbcRepository<GenTable, Long> {
    * @param tableName 表名称
    * @return 业务信息
    */
-  public GenTable selectGenTableByName(String tableName);
+  public GenTable findGenTableByName(String tableName);
 
 
+  Long countGenTableList(GenTableQuery genTable);
 }

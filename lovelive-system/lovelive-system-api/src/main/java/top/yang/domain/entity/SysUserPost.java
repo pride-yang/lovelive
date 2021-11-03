@@ -1,7 +1,7 @@
 package top.yang.domain.entity;
 
 import lombok.Data;
-import top.yang.pojo.BaseBean;
+import top.yang.domain.pojo.BaseBean;
 
 /**
  * 用户和岗位关联 sys_user_post

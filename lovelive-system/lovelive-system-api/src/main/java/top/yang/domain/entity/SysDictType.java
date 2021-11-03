@@ -2,7 +2,9 @@ package top.yang.domain.entity;
 
 
 import lombok.Data;
-import top.yang.pojo.BaseEntity;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Table;
+import top.yang.domain.pojo.BaseEntity;
 
 /**
  * 字典类型表 sys_dict_type
@@ -10,13 +12,14 @@ import top.yang.pojo.BaseEntity;
  * @author ruoyi
  */
 @Data
+@Table("sys_dict_type")
 public class SysDictType extends BaseEntity {
 
 
   /**
    * 字典主键
    */
-
+  @Id
   private Long dictId;
 
   /**

@@ -3,6 +3,7 @@ package top.yang.mapper;
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import top.yang.domain.entity.SysDictType;
+import top.yang.repository.BaseJdbcRepository;
 
 /**
  * 字典表 数据层
@@ -10,7 +11,7 @@ import top.yang.domain.entity.SysDictType;
  * @author ruoyi
  */
 @Mapper
-public interface SysDictTypeMapper extends BaseJdbcRepository<SysDictType, Long>{
+public interface SysDictTypeMapper extends BaseJdbcRepository<SysDictType, Long> {
 
   /**
    * 根据条件分页查询字典类型

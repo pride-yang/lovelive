@@ -2,8 +2,9 @@ package top.yang.domain.entity;
 
 
 import lombok.Data;
-import top.yang.pojo.BaseBean;
-import top.yang.pojo.BaseEntity;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Table;
+import top.yang.domain.pojo.BaseEntity;
 
 /**
  * 参数配置表 sys_config
@@ -11,13 +12,14 @@ import top.yang.pojo.BaseEntity;
  * @author ruoyi
  */
 @Data
+@Table("sys_config")
 public class SysConfig extends BaseEntity {
 
 
   /**
    * 参数主键
    */
-
+  @Id
   private Long configId;
 
   /**

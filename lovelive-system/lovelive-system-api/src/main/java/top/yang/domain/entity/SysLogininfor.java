@@ -3,7 +3,9 @@ package top.yang.domain.entity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import java.util.Date;
 import lombok.Data;
-import top.yang.pojo.BaseEntity;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Table;
+import top.yang.domain.pojo.BaseEntity;
 
 /**
  * 系统访问记录表 sys_logininfor
@@ -11,13 +13,14 @@ import top.yang.pojo.BaseEntity;
  * @author ruoyi
  */
 @Data
+@Table("sys_logininfor")
 public class SysLogininfor extends BaseEntity {
 
 
   /**
    * ID
    */
-
+  @Id
   private Long infoId;
 
   /**

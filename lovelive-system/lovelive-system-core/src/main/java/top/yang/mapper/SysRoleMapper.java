@@ -3,6 +3,7 @@ package top.yang.mapper;
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import top.yang.domain.entity.SysRole;
+import top.yang.repository.BaseJdbcRepository;
 
 /**
  * 角色表 数据层
@@ -10,7 +11,7 @@ import top.yang.domain.entity.SysRole;
  * @author ruoyi
  */
 @Mapper
-public interface SysRoleMapper extends BaseJdbcRepository<SysRole, Long>{
+public interface SysRoleMapper extends BaseJdbcRepository<SysRole, Long> {
 
   /**
    * 根据条件分页查询角色数据

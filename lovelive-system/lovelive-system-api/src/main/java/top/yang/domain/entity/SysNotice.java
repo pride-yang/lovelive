@@ -1,7 +1,8 @@
 package top.yang.domain.entity;
 
 import lombok.Data;
-import top.yang.pojo.BaseEntity;
+import org.springframework.data.relational.core.mapping.Table;
+import top.yang.domain.pojo.BaseEntity;
 
 /**
  * 通知公告表 sys_notice
@@ -9,6 +10,7 @@ import top.yang.pojo.BaseEntity;
  * @author ruoyi
  */
 @Data
+@Table("sys_notice")
 public class SysNotice extends BaseEntity {
 
 

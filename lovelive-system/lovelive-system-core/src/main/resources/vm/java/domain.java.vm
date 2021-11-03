@@ -5,7 +5,7 @@ import ${import};
 #end
 
 #if($table.crud || $table.sub)
-import top.yang.pojo.BaseEntity;
+import top.yang.domain.pojo.BaseEntity;
 #elseif($table.tree)
 
 #end

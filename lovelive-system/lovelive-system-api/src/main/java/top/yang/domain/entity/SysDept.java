@@ -3,7 +3,9 @@ package top.yang.domain.entity;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.Data;
-import top.yang.pojo.BaseEntity;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Table;
+import top.yang.domain.pojo.BaseEntity;
 
 
 /**
@@ -12,12 +14,14 @@ import top.yang.pojo.BaseEntity;
  * @author ruoyi
  */
 @Data
+@Table("sys_dept")
 public class SysDept extends BaseEntity {
 
 
   /**
    * 部门ID
    */
+  @Id
   private Long deptId;
 
   /**

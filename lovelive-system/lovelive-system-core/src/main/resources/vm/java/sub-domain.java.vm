@@ -60,7 +60,7 @@ public class ${subClassName} extends BaseEntity
 #end
 #end
 
-    @Override
+
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
 #foreach ($column in $subTable.columns)

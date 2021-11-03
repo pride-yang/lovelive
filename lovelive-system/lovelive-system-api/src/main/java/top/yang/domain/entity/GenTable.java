@@ -5,8 +5,9 @@ import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 import top.yang.collections.ArrayUtils;
+
 import top.yang.constants.GenConstants;
-import top.yang.pojo.BaseEntity;
+import top.yang.domain.pojo.BaseEntity;
 import top.yang.string.StringUtils;
 
 
@@ -16,7 +17,7 @@ import top.yang.string.StringUtils;
  * @author ruoyi
  */
 @Data
-@Table()
+@Table("gen_table")
 public class GenTable extends BaseEntity {
 
 

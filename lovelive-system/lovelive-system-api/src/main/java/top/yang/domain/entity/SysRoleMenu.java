@@ -1,7 +1,8 @@
 package top.yang.domain.entity;
 
 import lombok.Data;
-import top.yang.pojo.BaseBean;
+import top.yang.domain.pojo.BaseBean;
+
 
 /**
  * 角色和菜单关联 sys_role_menu

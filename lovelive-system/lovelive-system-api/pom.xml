@@ -5,6 +5,7 @@
   <artifactId>lovelive-system-api</artifactId>
   <version>1.0-SNAPSHOT</version>
   <name>lovelive-system-api</name>
+  <packaging>jar</packaging>
   <parent>
     <artifactId>lovelive-system</artifactId>
     <groupId>top.yang</groupId>
@@ -27,6 +28,16 @@
     <dependency>
       <groupId>top.yang</groupId>
       <artifactId>atomic-core</artifactId>
+      <version>1.0-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>top.yang</groupId>
+      <artifactId>atomic-data-jdbc</artifactId>
+      <version>1.0-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>top.yang</groupId>
+      <artifactId>atomic-spring</artifactId>
       <version>1.0-SNAPSHOT</version>
     </dependency>
     <dependency>

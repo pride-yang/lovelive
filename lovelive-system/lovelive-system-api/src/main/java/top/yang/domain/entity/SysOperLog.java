@@ -4,7 +4,8 @@ import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.Data;
-import top.yang.pojo.BaseEntity;
+import org.springframework.data.relational.core.mapping.Table;
+import top.yang.domain.pojo.BaseEntity;
 
 /**
  * 操作日志记录表 oper_log
@@ -12,6 +13,7 @@ import top.yang.pojo.BaseEntity;
  * @author ruoyi
  */
 @Data
+@Table("oper_log")
 public class SysOperLog extends BaseEntity {
 
 

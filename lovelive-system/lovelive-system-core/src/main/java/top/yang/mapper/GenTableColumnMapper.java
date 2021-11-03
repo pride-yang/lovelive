@@ -22,7 +22,7 @@ public interface GenTableColumnMapper extends BaseJdbcRepository<GenTableColumn,
    * @param tableName 表名称
    * @return 列信息
    */
-  public List<GenTableColumn> selectDbTableColumnsByName(String tableName);
+  public List<GenTableColumn> findDbTableColumnsByName(String tableName);
 
   /**
    * 查询业务字段列表
@@ -30,7 +30,7 @@ public interface GenTableColumnMapper extends BaseJdbcRepository<GenTableColumn,
    * @param tableId 业务字段编号
    * @return 业务字段集合
    */
-  public List<GenTableColumn> selectGenTableColumnListByTableId(Long tableId);
+  public List<GenTableColumn> findGenTableColumnListByTableId(Long tableId);
 
 
 }

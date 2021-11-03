@@ -3,7 +3,9 @@ package top.yang.domain.entity;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.Data;
-import top.yang.pojo.BaseEntity;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Table;
+import top.yang.domain.pojo.BaseEntity;
 
 /**
  * 菜单权限表 sys_menu
@@ -11,13 +13,14 @@ import top.yang.pojo.BaseEntity;
  * @author ruoyi
  */
 @Data
+@Table("sys_menu")
 public class SysMenu extends BaseEntity {
 
-  
 
   /**
    * 菜单ID
    */
+  @Id
   private Long menuId;
 
   /**

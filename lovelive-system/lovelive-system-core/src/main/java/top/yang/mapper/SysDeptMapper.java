@@ -4,8 +4,6 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
-import com.ruoyi.system.api.domain.SysDept;
-import top.yang.domain.entity.GenTable;
 import top.yang.domain.entity.SysDept;
 import top.yang.repository.BaseJdbcRepository;
 

@@ -2,7 +2,8 @@ package top.yang.domain.entity;
 
 
 import lombok.Data;
-import top.yang.pojo.BaseEntity;
+import org.springframework.data.relational.core.mapping.Table;
+import top.yang.domain.pojo.BaseEntity;
 
 /**
  * 角色表 sys_role
@@ -10,6 +11,7 @@ import top.yang.pojo.BaseEntity;
  * @author ruoyi
  */
 @Data
+@Table("sys_role")
 public class SysRole extends BaseEntity {
 
 

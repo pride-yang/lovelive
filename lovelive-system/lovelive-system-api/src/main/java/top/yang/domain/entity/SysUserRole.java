@@ -2,7 +2,8 @@ package top.yang.domain.entity;
 
 
 import lombok.Data;
-import top.yang.pojo.BaseBean;
+import top.yang.domain.pojo.BaseBean;
+
 
 /**
  * 用户和角色关联 sys_user_role

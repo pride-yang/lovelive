@@ -1,7 +1,8 @@
 package top.yang.domain.entity;
 
 import lombok.Data;
-import top.yang.pojo.BaseBean;
+import top.yang.domain.pojo.BaseBean;
+
 
 /**
  * 当前在线会话

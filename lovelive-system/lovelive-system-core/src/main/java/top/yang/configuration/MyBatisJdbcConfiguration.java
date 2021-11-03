@@ -14,7 +14,7 @@ import org.springframework.data.jdbc.repository.config.AbstractJdbcConfiguration
 import org.springframework.data.relational.core.dialect.Dialect;
 import org.springframework.data.relational.core.mapping.event.BeforeSaveCallback;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
-import top.yang.pojo.BaseIdEntity;
+import top.yang.domain.pojo.BaseIdEntity;
 import top.yang.utils.SnowFlake;
 
 /**
@@ -39,7 +39,7 @@ public class MyBatisJdbcConfiguration extends AbstractJdbcConfiguration {
    * @return
    */
   @Bean
-  @Override
+ 
   public DataAccessStrategy dataAccessStrategyBean(NamedParameterJdbcOperations operations, JdbcConverter jdbcConverter,
       JdbcMappingContext context, Dialect dialect) {
 

@@ -4,7 +4,8 @@ import java.util.Date;
 
 import java.util.List;
 import lombok.Data;
-import top.yang.pojo.BaseEntity;
+import org.springframework.data.relational.core.mapping.Table;
+import top.yang.domain.pojo.BaseEntity;
 
 
 /**
@@ -13,6 +14,7 @@ import top.yang.pojo.BaseEntity;
  * @author ruoyi
  */
 @Data
+@Table("sys_user")
 public class SysUser extends BaseEntity {
 
 
