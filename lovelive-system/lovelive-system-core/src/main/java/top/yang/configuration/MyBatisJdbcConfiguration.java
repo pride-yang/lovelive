@@ -12,6 +12,7 @@ import org.springframework.data.jdbc.mybatis.MyBatisDataAccessStrategy;
 import org.springframework.data.jdbc.mybatis.NamespaceStrategy;
 import org.springframework.data.jdbc.repository.config.AbstractJdbcConfiguration;
 import org.springframework.data.relational.core.dialect.Dialect;
+import org.springframework.data.relational.core.mapping.NamingStrategy;
 import org.springframework.data.relational.core.mapping.event.BeforeSaveCallback;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import top.yang.domain.pojo.BaseIdEntity;
@@ -24,46 +25,47 @@ import top.yang.utils.SnowFlake;
 public class MyBatisJdbcConfiguration extends AbstractJdbcConfiguration {
 
 
-  private @Autowired
-  SqlSession session;
-  @Autowired
-  private SnowFlake snowFlake;
+    private @Autowired
+    SqlSession session;
+    @Autowired
+    private SnowFlake snowFlake;
 
-  /**
-   * 自定义mybatis命名空间
-   *
-   * @param operations
-   * @param jdbcConverter
-   * @param context
-   * @param dialect
-   * @return
-   */
-  @Bean
- 
-  public DataAccessStrategy dataAccessStrategyBean(NamedParameterJdbcOperations operations, JdbcConverter jdbcConverter,
-      JdbcMappingContext context, Dialect dialect) {
+    /**
+     * 自定义mybatis命名空间
+     *
+     * @param operations
+     * @param jdbcConverter
+     * @param context
+     * @param dialect
+     * @return
+     */
+    @Override
+    @Bean
+    public DataAccessStrategy dataAccessStrategyBean(NamedParameterJdbcOperations operations, JdbcConverter jdbcConverter,
+            JdbcMappingContext context, Dialect dialect) {
 
-    return MyBatisDataAccessStrategy.createCombinedAccessStrategy(context, jdbcConverter, operations, session, new MybatisNamespaceStrategy(), new MySqlDialect());
-  }
+        return MyBatisDataAccessStrategy.createCombinedAccessStrategy(context, jdbcConverter, operations, session, new MybatisNamespaceStrategy(),
+                dialect);
+    }
 
-  /**
-   * 保存之前处理id或更新创建时间
-   *
-   * @return
-   */
-  @Bean
-  BeforeSaveCallback<BaseIdEntity> beforeSaveCallback() {
+    /**
+     * 保存之前处理id或更新创建时间
+     *
+     * @return
+     */
+    @Bean
+    BeforeSaveCallback<BaseIdEntity> beforeSaveCallback() {
 
-    return (baseIdEntity, mutableAggregateChange) -> {
-      if (baseIdEntity.getCreateTime() == null) {
-        baseIdEntity.setCreateTime(LocalDateTime.now());
-      }
-      baseIdEntity.setUpdateTime(LocalDateTime.now());
-      if (baseIdEntity.getId() == null) {
-        baseIdEntity.setId(snowFlake.nextId());
-      }
-      return baseIdEntity;
-    };
-  }
+        return (baseIdEntity, mutableAggregateChange) -> {
+            if (baseIdEntity.getCreateTime() == null) {
+                baseIdEntity.setCreateTime(LocalDateTime.now());
+            }
+            baseIdEntity.setUpdateTime(LocalDateTime.now());
+            if (baseIdEntity.getId() == null) {
+                baseIdEntity.setId(snowFlake.nextId());
+            }
+            return baseIdEntity;
+        };
+    }
 
 }

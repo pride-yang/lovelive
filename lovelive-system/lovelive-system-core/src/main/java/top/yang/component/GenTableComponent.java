@@ -11,41 +11,46 @@ import top.yang.mapper.GenTableMapper;
 import top.yang.repository.BaseJdbcRepository;
 
 @Component
-public class GenTableComponent extends BaseJdbcComponent<GenTableMapper, GenTable,Long> {
+public class GenTableComponent extends BaseJdbcComponent<GenTableMapper, GenTable, Long> {
 
-  @Autowired
-  private GenTableMapper genTableMapper;
+    @Autowired
+    private GenTableMapper genTableMapper;
 
 
-  protected GenTableMapper getRepository() {
-    return genTableMapper;
-  }
+    @Override
+    protected GenTableMapper getRepository() {
+        return genTableMapper;
+    }
 
-  public GenTable findGenTableByName(String tableName) {
-    return genTableMapper.findGenTableByName(tableName);
-  }
+    public GenTable findGenTableByName(String tableName) {
+        return genTableMapper.findGenTableByName(tableName);
+    }
 
-  public GenTable findGenTableById(Long tableId) {
-    return genTableMapper.findGenTableById(tableId);
-  }
+    public GenTable findGenTableById(Long tableId) {
+        return genTableMapper.findGenTableById(tableId);
+    }
 
-  public List<GenTable> findGenTableAll() {
-    return genTableMapper.findGenTableAll();
-  }
+    public List<GenTable> findGenTableAll() {
+        return genTableMapper.findGenTableAll();
+    }
 
-  public List<GenTable> findDbTableListByNames(List<String> tableNames) {
-    return genTableMapper.findDbTableListByNames(tableNames);
-  }
+    public List<GenTable> findDbTableListByNames(List<String> tableNames) {
+        return genTableMapper.findDbTableListByNames(tableNames);
+    }
 
-  public List<GenTable> findDbTableList(GenTable genTable) {
-    return genTableMapper.findDbTableList(genTable);
-  }
+    public List<GenTable> findDbTableList(GenTableQuery genTable) {
+        return genTableMapper.findDbTableList(genTable);
+    }
 
-  public List<GenTable> findGenTableList(GenTableQuery genTable) {
-    return genTableMapper.findGenTableList(genTable);
-  }
+    public Long countDbTableList(GenTableQuery genTable) {
+        return genTableMapper.countDbTableList(genTable);
+    }
 
-  public Long countGenTableList(GenTableQuery genTable) {
-    return genTableMapper.countGenTableList(genTable);
-  }
+    public List<GenTable> findGenTableList(GenTableQuery genTable) {
+        return genTableMapper.findGenTableList(genTable);
+    }
+
+    public Long countGenTableList(GenTableQuery genTable) {
+        return genTableMapper.countGenTableList(genTable);
+    }
 }

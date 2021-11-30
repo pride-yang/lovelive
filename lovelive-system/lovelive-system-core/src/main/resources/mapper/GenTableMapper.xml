@@ -76,7 +76,7 @@
     limit
   </select>
 
-  <select id="findDbTableList" parameterType="top.yang.domain.entity.GenTable" resultMap="GenTableResult">
+  <select id="findDbTableList" parameterType="top.yang.domain.query.GenTableQuery" resultMap="GenTableResult">
     select table_name, table_comment, create_time, update_time from information_schema.tables
     where table_schema = (select database())
     AND table_name NOT LIKE 'qrtz_%' AND table_name NOT LIKE 'gen_%'
@@ -87,11 +87,11 @@
     <if test="tableComment != null and tableComment != ''">
       AND lower(table_comment) like lower(concat('%', #{tableComment}, '%'))
     </if>
-    <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
-      AND date_format(create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
+    <if test="beginTime != null and beginTime != ''"><!-- 开始时间检索 -->
+      AND date_format(create_time,'%y%m%d') &gt;= date_format(#{beginTime},'%y%m%d')
     </if>
-    <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
-      AND date_format(create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
+    <if test="endTime != null and endTime != ''"><!-- 结束时间检索 -->
+      AND date_format(create_time,'%y%m%d') &lt;= date_format(#{endTime},'%y%m%d')
     </if>
     order by create_time desc
   </select>
@@ -136,7 +136,7 @@
   </select>
 
   <select id="countGenTableList" resultType="java.lang.Long">
-    select count() from gen_table
+    select count(1) from gen_table
     <where>
       <if test="tableName != null and tableName != ''">
         AND lower(table_name) like lower(concat('%', #{tableName}, '%'))
@@ -151,5 +151,24 @@
         AND date_format(create_time,'%y%m%d') &lt;= date_format(#{endTime},'%y%m%d')
       </if>
     </where>
+  </select>
+
+  <select id="countDbTableList">
+    select count(1) from information_schema.tables
+    where table_schema = (select database())
+    AND table_name NOT LIKE 'qrtz_%' AND table_name NOT LIKE 'gen_%'
+    AND table_name NOT IN (select table_name from gen_table)
+    <if test="tableName != null and tableName != ''">
+      AND lower(table_name) like lower(concat('%', #{tableName}, '%'))
+    </if>
+    <if test="tableComment != null and tableComment != ''">
+      AND lower(table_comment) like lower(concat('%', #{tableComment}, '%'))
+    </if>
+    <if test="beginTime != null and beginTime != ''"><!-- 开始时间检索 -->
+      AND date_format(create_time,'%y%m%d') &gt;= date_format(#{beginTime},'%y%m%d')
+    </if>
+    <if test="endTime != null and endTime != ''"><!-- 结束时间检索 -->
+      AND date_format(create_time,'%y%m%d') &lt;= date_format(#{endTime},'%y%m%d')
+    </if>
   </select>
 </mapper>

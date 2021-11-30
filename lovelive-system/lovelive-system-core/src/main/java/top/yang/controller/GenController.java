@@ -1,41 +1,27 @@
 package top.yang.controller;
 
-import java.io.IOException;
-import java.util.List;
-import javax.servlet.http.HttpServletResponse;
-import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import top.yang.domain.dto.PageResult;
 import top.yang.domain.entity.GenTable;
-import top.yang.domain.entity.GenTableColumn;
 import top.yang.request.GenTableReq;
 import top.yang.service.GenTableService;
-import top.yang.text.Convert;
-import top.yang.web.annotation.ControllerLog;
-import top.yang.web.base.BaseController;
-import top.yang.web.enums.BusinessType;
+import top.yang.web.controller.BaseController;
 
 @Controller("tool/gen")
 public class GenController extends BaseController {
 
-  @Autowired
-  private GenTableService genTableService;
+    @Autowired
+    private GenTableService genTableService;
 
-  /**
-   * 查询代码生成列表
-   */
-  @GetMapping("/list")
-  public PageResult<GenTable> genList(GenTableReq genTable) {
-    return genTableService.findGenTableList(genTable);
-  }
+    /**
+     * 查询代码生成列表
+     */
+    @GetMapping("/list")
+    public PageResult<GenTable> genList(GenTableReq genTable) {
+        return genTableService.findGenTableList(genTable);
+    }
 
 //  /**
 //   * 修改代码生成业务
@@ -52,16 +38,14 @@ public class GenController extends BaseController {
 //    return AjaxResult.success(map);
 //  }
 
-//  /**
-//   * 查询数据库列表
-//   */
-//
-//  @GetMapping("/db/list")
-//  public TableDataInfo dataList(GenTableReq genTable) {
-//    startPage();
-//    List<GenTable> list = genTableService.selectDbTableList(genTable);
-//    return getDataTable(list);
-//  }
+    /**
+     * 查询数据库列表
+     */
+
+    @GetMapping("/db/list")
+    public PageResult<GenTable> dataList(GenTableReq genTable) {
+        return genTableService.selectDbTableList(genTable);
+    }
 //
 //  /**
 //   * 查询数据表字段列表

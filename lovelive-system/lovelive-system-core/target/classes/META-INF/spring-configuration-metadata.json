@@ -1,0 +1,11 @@
+{
+  "groups": [
+    {
+      "name": "gen",
+      "type": "top.yang.configuration.GenConfig",
+      "sourceType": "top.yang.configuration.GenConfig"
+    }
+  ],
+  "properties": [],
+  "hints": []
+}

@@ -9,14 +9,15 @@ import org.springframework.data.jdbc.mybatis.NamespaceStrategy;
 @Configuration
 public class MybatisNamespaceStrategy implements NamespaceStrategy {
 
-  /**
-   * mybatis XML命名空间
-   *
-   * @param domainType
-   * @return
-   */
- 
-  public String getNamespace(Class<?> domainType) {
-    return "top.yang.mapper.".concat(domainType.getSimpleName()).concat("Mapper");
-  }
+    /**
+     * mybatis XML命名空间
+     *
+     * @param domainType
+     * @return
+     */
+
+    @Override
+    public String getNamespace(Class<?> domainType) {
+        return "top.yang.mapper.".concat(domainType.getSimpleName()).concat("Mapper");
+    }
 }

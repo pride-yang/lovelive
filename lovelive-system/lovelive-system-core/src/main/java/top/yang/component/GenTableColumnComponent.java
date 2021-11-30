@@ -14,6 +14,7 @@ public class GenTableColumnComponent extends BaseJdbcComponent<GenTableColumnMap
   private GenTableColumnMapper genTableColumnMapper;
 
 
+  @Override
   protected GenTableColumnMapper getRepository() {
     return genTableColumnMapper;
   }

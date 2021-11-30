@@ -26,6 +26,22 @@
       <artifactId>atomic-data-jdbc</artifactId>
       <version>1.0-SNAPSHOT</version>
     </dependency>
+    <!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
+    <dependency>
+      <groupId>commons-io</groupId>
+      <artifactId>commons-io</artifactId>
+      <version>2.11.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.dubbo</groupId>
+      <artifactId>dubbo-registry-consul</artifactId>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/com.orbitz.consul/consul-client -->
+    <dependency>
+      <groupId>com.orbitz.consul</groupId>
+      <artifactId>consul-client</artifactId>
+      <version>1.5.3</version>
+    </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-devtools</artifactId>
@@ -45,19 +61,19 @@
     <!-- Spring Boot dependencies -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-actuator</artifactId>
+      <artifactId>spring-boot-starter-actuator</artifactId>
     </dependency>
 
     <!-- Dubbo Spring Cloud Starter -->
+    <!-- https://mvnrepository.com/artifact/org.apache.dubbo/dubbo-spring-boot-starter -->
     <dependency>
-      <groupId>com.alibaba.cloud</groupId>
-      <artifactId>spring-cloud-starter-dubbo</artifactId>
+      <groupId>org.apache.dubbo</groupId>
+      <artifactId>dubbo-spring-boot-starter</artifactId>
     </dependency>
 
-    <!-- Spring Cloud Nacos Service Discovery -->
     <dependency>
-      <groupId>com.alibaba.cloud</groupId>
-      <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-starter-consul-discovery</artifactId>
     </dependency>
     <dependency>
       <groupId>mysql</groupId>

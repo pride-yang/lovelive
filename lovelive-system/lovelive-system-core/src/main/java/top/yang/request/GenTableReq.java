@@ -4,6 +4,9 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import top.yang.web.domain.request.PageReq;
 
+/**
+ * @author pride
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 public class GenTableReq extends PageReq {

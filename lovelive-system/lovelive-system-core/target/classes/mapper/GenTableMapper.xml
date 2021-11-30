@@ -57,7 +57,7 @@
     select table_id, table_name, table_comment, sub_table_name, sub_table_fk_name, class_name, tpl_category, package_name, module_name, business_name, function_name, function_author, gen_type, gen_path, options, create_by, create_time, update_by, update_time, remark from gen_table
   </sql>
 
-  <select id="findGenTableList" parameterType="top.yang.domain.entity.GenTable" resultMap="GenTableResult">
+  <select id="findGenTableList" parameterType="top.yang.domain.query.GenTableQuery" resultMap="GenTableResult">
     <include refid="selectGenTableVo"/>
     <where>
       <if test="tableName != null and tableName != ''">
@@ -73,6 +73,7 @@
         AND date_format(create_time,'%y%m%d') &lt;= date_format(#{endTime},'%y%m%d')
       </if>
     </where>
+    limit
   </select>
 
   <select id="findDbTableList" parameterType="top.yang.domain.entity.GenTable" resultMap="GenTableResult">
@@ -134,10 +135,21 @@
     order by c.sort
   </select>
 
-
-
-
-
-
-
+  <select id="countGenTableList" resultType="java.lang.Long">
+    select count() from gen_table
+    <where>
+      <if test="tableName != null and tableName != ''">
+        AND lower(table_name) like lower(concat('%', #{tableName}, '%'))
+      </if>
+      <if test="tableComment != null and tableComment != ''">
+        AND lower(table_comment) like lower(concat('%', #{tableComment}, '%'))
+      </if>
+      <if test="beginTime != null and beginTime != ''"><!-- 开始时间检索 -->
+        AND date_format(create_time,'%y%m%d') &gt;= date_format(#{beginTime},'%y%m%d')
+      </if>
+      <if test="endTime != null and endTime != ''"><!-- 结束时间检索 -->
+        AND date_format(create_time,'%y%m%d') &lt;= date_format(#{endTime},'%y%m%d')
+      </if>
+    </where>
+  </select>
 </mapper>

@@ -28,7 +28,7 @@ public interface GenTableMapper extends BaseJdbcRepository<GenTable, Long> {
    * @param genTable 业务信息
    * @return 数据库表集合
    */
-  public List<GenTable> findDbTableList(GenTable genTable);
+  public List<GenTable> findDbTableList(GenTableQuery genTable);
 
   /**
    * 查询据库列表
@@ -63,4 +63,6 @@ public interface GenTableMapper extends BaseJdbcRepository<GenTable, Long> {
 
 
   Long countGenTableList(GenTableQuery genTable);
+
+  Long countDbTableList(GenTableQuery genTable);
 }

@@ -5,6 +5,9 @@ import lombok.Data;
 import top.yang.domain.entity.GenTable;
 import top.yang.domain.entity.GenTableColumn;
 
+/**
+ * @author pride
+ */
 @Data
 public class GenTableQuery extends PageQuery {
 

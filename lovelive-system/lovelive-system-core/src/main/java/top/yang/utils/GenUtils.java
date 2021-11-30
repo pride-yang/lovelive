@@ -18,7 +18,7 @@ public class GenUtils {
   /**
    * 初始化表信息
    */
-  public static void initTable(GenTable genTable, String operName) {
+  public static void initTable(GenTable genTable) {
     genTable.setClassName(convertClassName(genTable.getTableName()));
     genTable.setPackageName(GenConfig.getPackageName());
     genTable.setModuleName(getModuleName(GenConfig.getPackageName()));
