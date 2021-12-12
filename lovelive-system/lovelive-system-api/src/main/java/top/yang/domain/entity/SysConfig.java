@@ -1,6 +1,7 @@
 package top.yang.domain.entity;
 
 
+import java.util.Date;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;

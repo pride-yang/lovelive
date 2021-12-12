@@ -2,6 +2,7 @@ package top.yang.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import top.yang.domain.entity.SysDept;
@@ -12,6 +13,7 @@ import top.yang.repository.BaseJdbcRepository;
  *
  * @author ruoyi
  */
+@Mapper
 public interface SysDeptMapper extends BaseJdbcRepository<SysDept, Long> {
 
   /**

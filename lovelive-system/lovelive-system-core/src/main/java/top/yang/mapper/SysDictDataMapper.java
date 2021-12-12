@@ -3,7 +3,7 @@ package top.yang.mapper;
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import top.yang.domain.entity.GenTable;
+
 import top.yang.domain.entity.SysDictData;
 import top.yang.repository.BaseJdbcRepository;
 

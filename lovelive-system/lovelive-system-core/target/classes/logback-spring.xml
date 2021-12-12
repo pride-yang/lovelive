@@ -84,7 +84,7 @@
   <!-- DEBUG级别日志 appender -->
   <appender name="DEBUG" class="ch.qos.logback.core.rolling.RollingFileAppender">
     <!--记录的日志文件的路径及文件名-->
-    <file>${log.path}/DEBUG.log</file>
+    <file>${log.path}/debug.log</file>
     <filter class="ch.qos.logback.classic.filter.LevelFilter">
       <level>DEBUG</level>
       <onMatch>ACCEPT</onMatch>
