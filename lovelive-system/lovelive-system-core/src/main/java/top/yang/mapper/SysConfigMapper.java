@@ -3,6 +3,7 @@ package top.yang.mapper;
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import top.yang.domain.entity.SysConfig;
+import top.yang.domain.query.SysConfigQuery;
 import top.yang.repository.BaseJdbcRepository;
 
 
@@ -28,7 +29,7 @@ public interface SysConfigMapper extends BaseJdbcRepository<SysConfig, Long> {
      * @param config 参数配置信息
      * @return 参数配置集合
      */
-    public List<SysConfig> selectConfigList(SysConfig config);
+    public List<SysConfig> findByQuery(SysConfigQuery config);
 
     /**
      * 根据键名查询参数配置信息
@@ -38,12 +39,6 @@ public interface SysConfigMapper extends BaseJdbcRepository<SysConfig, Long> {
      */
     public SysConfig checkConfigKeyUnique(String configKey);
 
-    /**
-     * 新增参数配置
-     *
-     * @param config 参数配置信息
-     * @return 结果
-     */
 
-
+    long countByQuery(SysConfigQuery sysConfigQuery);
 }

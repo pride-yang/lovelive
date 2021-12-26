@@ -11,10 +11,5 @@ import top.yang.mapper.SysDictTypeMapper;
 @Component
 public class SysDictTypeComponent extends BaseJdbcComponent<SysDictTypeMapper, SysDictType, Long>{
 
-    @Autowired
-    private SysDictTypeMapper sysDictTypeMapper;
 
-    @Override
-    protected SysDictTypeMapper getRepository() {
-        return sysDictTypeMapper;    }
 }

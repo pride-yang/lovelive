@@ -22,7 +22,7 @@ public class MysqlGenerator {
 
     public static void main(String[] args) {
 
-        String[] tables = new String[]{"sys_role", "sys_notice", "sys_dict_type", "sys_dict_data", "sys_dept" };
+        String[] tables = new String[]{"sys_role", "sys_notice", "sys_dict_type", "sys_dict_data", "sys_dept"};
         for (String s : tables) {
             createComponent(s);
             createController(s);
@@ -41,7 +41,7 @@ public class MysqlGenerator {
         stringBuffer.append("import top.yang.domain.entity.").append(underlineToHump(table, false)).append(";\n");
         stringBuffer.append("import org.springframework.stereotype.Component").append(";\n");
         stringBuffer.append("import top.yang.mapper.").append(underlineToHump(table, false)).append("Mapper;\n");
-        stringBuffer.append("\n/**\n * @author PrideYang\n */\n");
+
         stringBuffer.append("@Component\n");
         stringBuffer.append("public class ").append(underlineToHump(table, false)).append("Component extends BaseJdbcComponent<").append(underlineToHump(table, false))
                 .append("Mapper, ")
@@ -70,7 +70,7 @@ public class MysqlGenerator {
                 + "import org.springframework.stereotype.Controller;\n"
                 + "import org.springframework.web.bind.annotation.RequestMapping;\n");
         stringBuffer.append("import top.yang.web.controller.BaseController;\n");
-        stringBuffer.append("\n/**\n * @author PrideYang\n */\n");
+
         stringBuffer.append("@Controller\n");
         stringBuffer.append("@RequestMapping()\n");
         stringBuffer.append("public class ").append(underlineToHump(table, false)).append("Controller extends BaseController {\n");
@@ -85,7 +85,7 @@ public class MysqlGenerator {
         stringBuffer.append("package top.yang.manager;\n");
 
         stringBuffer.append("import top.yang.domain.entity.").append(underlineToHump(table, false)).append(";\n");
-        stringBuffer.append("\n/**\n * @author PrideYang\n */\n");
+
         stringBuffer.append("public interface ").append(underlineToHump(table, false)).append("Manager extends BaseManager<").append(underlineToHump(table, false))
                 .append(", Long> {\n");
         stringBuffer.append("\n");
@@ -101,7 +101,6 @@ public class MysqlGenerator {
         stringBuffer.append("import top.yang.manager.").append(underlineToHump(table, false)).append("Manager;\n");
         stringBuffer.append("import top.yang.domain.entity.").append(underlineToHump(table, false)).append(";\n");
         stringBuffer.append("import org.springframework.stereotype.Component;\n");
-        stringBuffer.append("\n/**\n * @author PrideYang\n */\n");
 
         stringBuffer.append("@Component\n");
         stringBuffer.append("public class ").append(underlineToHump(table, false)).append("ManagerImpl extends BaseManagerImpl<").append(underlineToHump(table, false))
@@ -137,7 +136,7 @@ public class MysqlGenerator {
         stringBuffer.append("import org.springframework.data.annotation.Id;" + "\n");
         stringBuffer.append("import org.springframework.data.relational.core.mapping.Table;" + "\n");
         stringBuffer.append("top.yang.domain.pojo.BaseEntity;" + "\n");
-        stringBuffer.append("\n/**\n * @author PrideYang\n */\n");
+
         stringBuffer.append("@Data\n@Table(\"").append(table).append("\")");
         stringBuffer.append("public class ").append(underlineToHump(table, false)).append("extends BaseEntity {\n\n\n");
         try {
@@ -172,6 +171,43 @@ public class MysqlGenerator {
         }
     }
 
+    public static void createDto(String table) {
+        StringBuffer stringBuffer = new StringBuffer();
+        stringBuffer.append("package top.yang.domain.dto.").append(underlineToHump(table, false)).append("\n");
+        stringBuffer.append("import java.util.Date;" + "\n");
+        stringBuffer.append("import lombok.Data;" + "\n");
+        stringBuffer.append("top.yang.domain.pojo.BaseDto;" + "\n");
+
+        stringBuffer.append("public class ").append(underlineToHump(table, false)).append("extends BaseDto {\n\n\n");
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/love_system", "root", "yzh19981204mysql");
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(
+                    "select column_name,data_type,column_comment,column_key  from information_schema.columns where table_schema=" + "love_system" + " and table_name=" + table
+                            + ";");
+
+            while (resultSet.next()) {
+                String columnName = resultSet.getString("column_name");
+                String dataType = resultSet.getString("data_type");
+                String columnComment = resultSet.getString("column_comment");
+                if (StringUtils.equalsAnyIgnoreCase(columnName, "create_time", "update_time")) {
+                    continue;
+                }
+                stringBuffer.append("  /**\n");
+                stringBuffer.append("   * ").append(columnComment).append("\n");
+                stringBuffer.append("  /**\n");
+                stringBuffer.append("  private ").append(getFieldType(dataType)).append(" ").append(underlineToHump(columnName, true)).append("\n");
+            }
+            stringBuffer.append("}");
+            writeFile(System.getProperty("user.dir") + File.separator + API + "/src/main/java/top/yang/domain/entity/" + underlineToHump(table, false) + ".java",
+                    stringBuffer.toString());
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
     private static String getFieldType(String fieldType) {
         if (StringUtils.equalsAnyIgnoreCase(fieldType, "varchar", "longtext", "text")) {
             return "String";
@@ -180,7 +216,7 @@ public class MysqlGenerator {
         } else if (StringUtils.equalsAnyIgnoreCase(fieldType, "bigint")) {
             return "Long";
         } else if (StringUtils.equalsAnyIgnoreCase(fieldType, "datetime", "date", "timestamp")) {
-            return "Date";
+            return "LocalDateTime";
         } else if (StringUtils.equalsAnyIgnoreCase(fieldType, "blob")) {
             return "byte[]";
         } else if (StringUtils.equalsAnyIgnoreCase(fieldType, "float")) {

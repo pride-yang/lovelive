@@ -5,6 +5,6 @@ import top.yang.web.request.PageReq;
 /**
  * @author PrideYang
  */
-public class SysConfigReq extends PageReq {
+public class SysDictDataReq extends PageReq {
 
 }

@@ -11,10 +11,5 @@ import top.yang.mapper.SysNoticeMapper;
 @Component
 public class SysNoticeComponent extends BaseJdbcComponent<SysNoticeMapper, SysNotice, Long>{
 
-    @Autowired
-    private SysNoticeMapper sysNoticeMapper;
 
-    @Override
-    protected SysNoticeMapper getRepository() {
-        return sysNoticeMapper;    }
 }

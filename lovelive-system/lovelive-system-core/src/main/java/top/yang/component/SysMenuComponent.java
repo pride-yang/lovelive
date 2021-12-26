@@ -11,11 +11,5 @@ import top.yang.mapper.SysMenuMapper;
 @Component
 public class SysMenuComponent extends BaseJdbcComponent<SysMenuMapper, SysMenu, Long> {
 
-    @Autowired
-    private SysMenuMapper sysMenuMapper;
 
-    @Override
-    protected SysMenuMapper getRepository() {
-        return sysMenuMapper;
-    }
 }

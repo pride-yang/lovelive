@@ -9,12 +9,6 @@ import top.yang.mapper.SysDeptMapper;
  * @author PrideYang
  */
 @Component
-public class SysDeptComponent extends BaseJdbcComponent<SysDeptMapper, SysDept, Long>{
+public class SysDeptComponent extends BaseJdbcComponent<SysDeptMapper, SysDept, Long> {
 
-    @Autowired
-    private SysDeptMapper sysDeptMapper;
-
-    @Override
-    protected SysDeptMapper getRepository() {
-        return sysDeptMapper;    }
 }
