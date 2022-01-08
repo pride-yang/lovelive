@@ -1,20 +1,14 @@
 package top.yang.component;
 
-import java.util.List;
-import top.yang.domain.dto.PageResult;
-import top.yang.domain.dto.SysConfigDto;
+import org.springframework.beans.factory.annotation.Autowired;
 import top.yang.domain.entity.SysConfig;
-import top.yang.domain.query.SysConfigQuery;
+import org.springframework.stereotype.Component;
 import top.yang.mapper.SysConfigMapper;
+@Component
+public class SysConfigComponent extends BaseJdbcComponent<SysConfigMapper, SysConfig, Long>{
 
-/**
- * @author PrideYang
- */
-public class SysConfigComponent extends BaseJdbcComponent<SysConfigMapper, SysConfig, Long> {
+    @Autowired
+    private SysConfigMapper sysConfigMapper;
 
-    public PageResult<SysConfigDto> findByQuery(SysConfigQuery sysConfigQuery) {
-        long count = this.repository.countByQuery(sysConfigQuery);
-        List<SysConfig> resultList = this.repository.findByQuery(sysConfigQuery);
-        return null;
-    }
+
 }

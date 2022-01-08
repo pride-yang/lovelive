@@ -1,94 +1,27 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="top.yang.mapper.SysConfigMapper">
 
-  <resultMap type="top.yang.domain.entity.SysConfig" id="SysConfigResult">
-    <id property="configId" column="config_id"/>
-    <result property="configName" column="config_name"/>
-    <result property="configKey" column="config_key"/>
-    <result property="configValue" column="config_value"/>
-    <result property="configType" column="config_type"/>
-    <result property="createBy" column="create_by"/>
-    <result property="createTime" column="create_time"/>
-    <result property="updateBy" column="update_by"/>
-    <result property="updateTime" column="update_time"/>
+  <resultMap id="BaseResultMap" type="top.yang.domain.entity.SysConfig">
+    <id property="config_id" column="config_id" jdbcType="INTEGER"/>
+    <result property="config_name" column="config_name" jdbcType="VARCHAR"/>
+    <result property="config_key" column="config_key" jdbcType="VARCHAR"/>
+    <result property="config_value" column="config_value" jdbcType="VARCHAR"/>
+    <result property="config_type" column="config_type" jdbcType="CHAR"/>
+    <result property="create_by" column="create_by" jdbcType="VARCHAR"/>
+    <result property="create_time" column="create_time" jdbcType="TIMESTAMP"/>
+    <result property="update_by" column="update_by" jdbcType="VARCHAR"/>
+    <result property="update_time" column="update_time" jdbcType="TIMESTAMP"/>
+    <result property="remark" column="remark" jdbcType="VARCHAR"/>
   </resultMap>
 
-  <sql id="selectConfigVo">
-    select config_id,
-           config_name,
-           config_key,
-           config_value,
-           config_type,
-           create_by,
-           create_time,
-           update_by,
-           update_time,
-           remark
-    from sys_config
+  <sql id="Base_Column_List">
+    config_id
+    ,config_name,config_key,
+        config_value,config_type,create_by,
+        create_time,update_by,update_time,
+        remark
   </sql>
-
-  <!-- 查询条件 -->
-  <sql id="sqlwhereSearch">
-    <where>
-      <if test="configId !=null">
-        and config_id = #{configId}
-      </if>
-      <if test="configKey !=null and configKey != ''">
-        and config_key = #{configKey}
-      </if>
-    </where>
-  </sql>
-
-  <select id="selectConfig" parameterType="top.yang.domain.entity.SysConfig"
-    resultMap="SysConfigResult">
-    <include refid="selectConfigVo"/>
-    <include refid="sqlwhereSearch"/>
-  </select>
-
-  <select id="findByQuery" parameterType="top.yang.domain.query.SysConfigQuery"
-    resultMap="SysConfigResult">
-    <include refid="selectConfigVo"/>
-    <where>
-      <if test="configId != null">
-        and config_id = #{configId}
-      </if>
-      <if test="configName != null and configName != ''">
-        AND config_name like concat('%', #{configName}, '%')
-      </if>
-      <if test="configType != null and configType != ''">
-        AND config_type = #{configType}
-      </if>
-      <if test="configKey != null and configKey != ''">
-        AND config_key like concat('%', #{configKey}, '%')
-      </if>
-    </where>
-    limit startIndex,pageSize
-  </select>
-
-  <select id="checkConfigKeyUnique" parameterType="String" resultMap="SysConfigResult">
-    <include refid="selectConfigVo"/>
-    where config_key = #{configKey} limit 1
-  </select>
-  <select id="countByQuery" resultType="java.lang.Long">
-    <include refid="selectConfigVo"/>
-    <where>
-      <if test="configId != null">
-        and config_id = #{configId}
-      </if>
-      <if test="configName != null and configName != ''">
-        AND config_name like concat('%', #{configName}, '%')
-      </if>
-      <if test="configType != null and configType != ''">
-        AND config_type = #{configType}
-      </if>
-      <if test="configKey != null and configKey != ''">
-        AND config_key like concat('%', #{configKey}, '%')
-      </if>
-    </where>
-  </select>
-
-
 </mapper>

@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Locale;
+import lombok.SneakyThrows;
 import top.yang.string.StringUtils;
 
 /**
@@ -22,15 +23,35 @@ public class MysqlGenerator {
 
     public static void main(String[] args) {
 
-        String[] tables = new String[]{"sys_role", "sys_notice", "sys_dict_type", "sys_dict_data", "sys_dept"};
+        String[] tables = new String[]{"sys_role", "sys_notice", "sys_dict_type", "sys_dict_data", "sys_config"};
         for (String s : tables) {
             createComponent(s);
             createController(s);
-//            createDomain(s);
+            createDomain(s);
+            createDto(s);
+            createMapper(s);
             createManager(s);
             createService(s);
             createManagerImpl(s);
         }
+    }
+
+    public static void createMapper(String table) {
+        StringBuffer stringBuffer = new StringBuffer();
+        stringBuffer.append("package top.yang.mapper;\n"
+                + "\n"
+                + "import org.springframework.beans.factory.annotation.Autowired;\n");
+        stringBuffer.append("import top.yang.domain.entity.").append(underlineToHump(table, false)).append(";\n");
+        stringBuffer.append("import org.apache.ibatis.annotations.Mapper;").append(";\n");
+        stringBuffer.append("import top.yang.repository.BaseJdbcRepository;").append(";\n");
+        stringBuffer.append("@Mapper\n");
+        stringBuffer.append("public interface ").append(underlineToHump(table, false)).append("Mapper extends BaseJdbcRepository<")
+                .append(underlineToHump(table, false)).append(", Long>{\n");
+        stringBuffer.append("\n");
+        stringBuffer.append("\n");
+        stringBuffer.append("}");
+        writeFile(System.getProperty("user.dir") + File.separator + CORE + "/src/main/java/top/yang/mapper/" + underlineToHump(table, false) + "Mapper.java",
+                stringBuffer.toString());
     }
 
     public static void createComponent(String table) {
@@ -51,10 +72,6 @@ public class MysqlGenerator {
         stringBuffer.append("    private ").append(underlineToHump(table, false)).append("Mapper ").append(underlineToHump(table, true)).append("Mapper;");
         stringBuffer.append("\n");
         stringBuffer.append("\n");
-        stringBuffer.append("    @Override\n");
-        stringBuffer.append("    protected ").append(underlineToHump(table, false)).append("Mapper getRepository() {\n");
-        stringBuffer.append("        return ").append(underlineToHump(table, true)).append("Mapper;");
-        stringBuffer.append("    }");
         stringBuffer.append("\n");
         stringBuffer.append("}");
         writeFile(System.getProperty("user.dir") + File.separator + CORE + "/src/main/java/top/yang/component/" + underlineToHump(table, false) + "Component.java",
@@ -84,10 +101,10 @@ public class MysqlGenerator {
         StringBuffer stringBuffer = new StringBuffer();
         stringBuffer.append("package top.yang.manager;\n");
 
-        stringBuffer.append("import top.yang.domain.entity.").append(underlineToHump(table, false)).append(";\n");
+        stringBuffer.append("import top.yang.domain.dto.").append(underlineToHump(table, false)).append("Dto;\n");
 
         stringBuffer.append("public interface ").append(underlineToHump(table, false)).append("Manager extends BaseManager<").append(underlineToHump(table, false))
-                .append(", Long> {\n");
+                .append("Dto, Long> {\n");
         stringBuffer.append("\n");
         stringBuffer.append("}");
         writeFile(System.getProperty("user.dir") + File.separator + API + "/src/main/java/top/yang/manager/" + underlineToHump(table, false) + "Manager.java",
@@ -100,12 +117,18 @@ public class MysqlGenerator {
         stringBuffer.append("import top.yang.component.").append(underlineToHump(table, false)).append("Component;\n");
         stringBuffer.append("import top.yang.manager.").append(underlineToHump(table, false)).append("Manager;\n");
         stringBuffer.append("import top.yang.domain.entity.").append(underlineToHump(table, false)).append(";\n");
+        stringBuffer.append("import top.yang.domain.dto.").append(underlineToHump(table, false)).append("Dto;\n");
         stringBuffer.append("import org.springframework.stereotype.Component;\n");
 
         stringBuffer.append("@Component\n");
         stringBuffer.append("public class ").append(underlineToHump(table, false)).append("ManagerImpl extends BaseManagerImpl<").append(underlineToHump(table, false))
                 .append("Component, ")
-                .append(underlineToHump(table, false)).append(", Long> implements ").append(underlineToHump(table, false)).append("Manager {\n");
+                .append(underlineToHump(table, false)).append("Dto, Long> implements ").append(underlineToHump(table, false)).append("Manager {\n");
+
+        stringBuffer.append("    @Override\n"
+                + "    public Class getEntityClass() {\n");
+        stringBuffer.append("        return ").append(underlineToHump(table, false)).append(".class;\n");
+        stringBuffer.append("    }");
         stringBuffer.append("\n}");
         writeFile(System.getProperty("user.dir") + File.separator + CORE + "/src/main/java/top/yang/manager/impl/" + underlineToHump(table, false) + "ManagerImpl.java",
                 stringBuffer.toString());
@@ -130,23 +153,24 @@ public class MysqlGenerator {
 
     public static void createDomain(String table) {
         StringBuffer stringBuffer = new StringBuffer();
-        stringBuffer.append("package top.yang.domain.entity.").append(underlineToHump(table, false)).append("\n");
+        stringBuffer.append("package top.yang.domain.entity;").append("\n");
         stringBuffer.append("import java.util.Date;" + "\n");
         stringBuffer.append("import lombok.Data;" + "\n");
         stringBuffer.append("import org.springframework.data.annotation.Id;" + "\n");
         stringBuffer.append("import org.springframework.data.relational.core.mapping.Table;" + "\n");
-        stringBuffer.append("top.yang.domain.pojo.BaseEntity;" + "\n");
+        stringBuffer.append("import top.yang.domain.pojo.BaseEntity;" + "\n");
 
-        stringBuffer.append("@Data\n@Table(\"").append(table).append("\")");
-        stringBuffer.append("public class ").append(underlineToHump(table, false)).append("extends BaseEntity {\n\n\n");
+        stringBuffer.append("@Data\n@Table(\"").append(table).append("\")\n");
+        stringBuffer.append("public class ").append(underlineToHump(table, false)).append(" extends BaseEntity {\n\n\n");
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/love_system", "root", "yzh19981204mysql");
             Statement statement = connection.createStatement();
+            String s = "select column_name,data_type,column_comment,column_key  from information_schema.columns where table_schema= 'love_system' and table_name= \'" + table
+                    + "\' ;";
             ResultSet resultSet = statement.executeQuery(
-                    "select column_name,data_type,column_comment,column_key  from information_schema.columns where table_schema=" + "love_system" + " and table_name=" + table
-                            + ";");
-
+                    s);
+            System.out.println(s);
             while (resultSet.next()) {
                 String columnName = resultSet.getString("column_name");
                 String dataType = resultSet.getString("data_type");
@@ -157,11 +181,11 @@ public class MysqlGenerator {
                 }
                 stringBuffer.append("  /**\n");
                 stringBuffer.append("   * ").append(columnComment).append("\n");
-                stringBuffer.append("  /**\n");
-                if ("".equals(columnKey)) {
+                stringBuffer.append("  **/\n");
+                if ("PRI".equals(columnKey)) {
                     stringBuffer.append("  @Id\n");
                 }
-                stringBuffer.append("  private ").append(getFieldType(dataType)).append(" ").append(underlineToHump(columnName, true)).append("\n");
+                stringBuffer.append("  private ").append(getFieldType(dataType)).append(" ").append(underlineToHump(columnName, true)).append(";\n");
             }
             stringBuffer.append("}");
             writeFile(System.getProperty("user.dir") + File.separator + API + "/src/main/java/top/yang/domain/entity/" + underlineToHump(table, false) + ".java",
@@ -173,19 +197,18 @@ public class MysqlGenerator {
 
     public static void createDto(String table) {
         StringBuffer stringBuffer = new StringBuffer();
-        stringBuffer.append("package top.yang.domain.dto.").append(underlineToHump(table, false)).append("\n");
+        stringBuffer.append("package top.yang.domain.dto").append(";\n");
         stringBuffer.append("import java.util.Date;" + "\n");
         stringBuffer.append("import lombok.Data;" + "\n");
-        stringBuffer.append("top.yang.domain.pojo.BaseDto;" + "\n");
-
-        stringBuffer.append("public class ").append(underlineToHump(table, false)).append("extends BaseDto {\n\n\n");
+        stringBuffer.append("@Data\n");
+        stringBuffer.append("public class ").append(underlineToHump(table, false)).append("Dto extends BaseDto {\n\n\n");
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/love_system", "root", "yzh19981204mysql");
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(
-                    "select column_name,data_type,column_comment,column_key  from information_schema.columns where table_schema=" + "love_system" + " and table_name=" + table
-                            + ";");
+                    "select column_name,data_type,column_comment,column_key  from information_schema.columns where table_schema= 'love_system' and table_name= \'" + table
+                            + "\' ;");
 
             while (resultSet.next()) {
                 String columnName = resultSet.getString("column_name");
@@ -196,11 +219,11 @@ public class MysqlGenerator {
                 }
                 stringBuffer.append("  /**\n");
                 stringBuffer.append("   * ").append(columnComment).append("\n");
-                stringBuffer.append("  /**\n");
-                stringBuffer.append("  private ").append(getFieldType(dataType)).append(" ").append(underlineToHump(columnName, true)).append("\n");
+                stringBuffer.append("  **/\n");
+                stringBuffer.append("  private ").append(getFieldType(dataType)).append(" ").append(underlineToHump(columnName, true)).append(";\n");
             }
             stringBuffer.append("}");
-            writeFile(System.getProperty("user.dir") + File.separator + API + "/src/main/java/top/yang/domain/entity/" + underlineToHump(table, false) + ".java",
+            writeFile(System.getProperty("user.dir") + File.separator + API + "/src/main/java/top/yang/domain/dto/" + underlineToHump(table, false) + "Dto.java",
                     stringBuffer.toString());
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
@@ -209,7 +232,7 @@ public class MysqlGenerator {
 
 
     private static String getFieldType(String fieldType) {
-        if (StringUtils.equalsAnyIgnoreCase(fieldType, "varchar", "longtext", "text")) {
+        if (StringUtils.equalsAnyIgnoreCase(fieldType, "char", "varchar", "longtext", "text")) {
             return "String";
         } else if (StringUtils.equalsAnyIgnoreCase(fieldType, "int")) {
             return "Integer";
@@ -226,6 +249,7 @@ public class MysqlGenerator {
         } else {
             return "";
         }
+
     }
 
     /**
@@ -260,7 +284,12 @@ public class MysqlGenerator {
 
     }
 
+    @SneakyThrows
     private static void writeFile(String path, String content) {
+        File file = new File(path);
+        if (!file.exists()) {
+            file.createNewFile();
+        }
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(path))) {
             bufferedWriter.write(content);
         } catch (IOException e) {
