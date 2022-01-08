@@ -1,10 +1,21 @@
 package top.yang.configuration;
 
+import java.io.Serializable;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 import org.apache.ibatis.session.SqlSession;
+import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.jdbc.core.convert.DataAccessStrategy;
 import org.springframework.data.jdbc.core.convert.JdbcConverter;
 import org.springframework.data.jdbc.core.mapping.JdbcMappingContext;
@@ -15,7 +26,9 @@ import org.springframework.data.relational.core.dialect.Dialect;
 import org.springframework.data.relational.core.mapping.NamingStrategy;
 import org.springframework.data.relational.core.mapping.event.BeforeSaveCallback;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
+import top.yang.domain.pojo.BaseEntity;
 import top.yang.domain.pojo.BaseIdEntity;
+import top.yang.string.StringUtils;
 import top.yang.utils.SnowFlake;
 
 /**
@@ -24,11 +37,10 @@ import top.yang.utils.SnowFlake;
 @Configuration(proxyBeanMethods = false)
 public class MyBatisJdbcConfiguration extends AbstractJdbcConfiguration {
 
+    private static final Logger logger = LoggerFactory.getLogger(MyBatisJdbcConfiguration.class);
 
     private @Autowired
     SqlSession session;
-    @Autowired
-    private SnowFlake snowFlake;
 
     /**
      * 自定义mybatis命名空间
@@ -39,33 +51,15 @@ public class MyBatisJdbcConfiguration extends AbstractJdbcConfiguration {
      * @param dialect
      * @return
      */
+    @NotNull
     @Override
     @Bean
-    public DataAccessStrategy dataAccessStrategyBean(NamedParameterJdbcOperations operations, JdbcConverter jdbcConverter,
-            JdbcMappingContext context, Dialect dialect) {
+    public DataAccessStrategy dataAccessStrategyBean(@NotNull NamedParameterJdbcOperations operations, @NotNull JdbcConverter jdbcConverter,
+            @NotNull JdbcMappingContext context, @NotNull Dialect dialect) {
 
         return MyBatisDataAccessStrategy.createCombinedAccessStrategy(context, jdbcConverter, operations, session, new MybatisNamespaceStrategy(),
                 dialect);
     }
 
-    /**
-     * 保存之前处理id或更新创建时间
-     *
-     * @return
-     */
-    @Bean
-    BeforeSaveCallback<BaseIdEntity> beforeSaveCallback() {
-
-        return (baseIdEntity, mutableAggregateChange) -> {
-            if (baseIdEntity.getCreateTime() == null) {
-                baseIdEntity.setCreateTime(LocalDateTime.now());
-            }
-            baseIdEntity.setUpdateTime(LocalDateTime.now());
-            if (baseIdEntity.getId() == null) {
-                baseIdEntity.setId(snowFlake.nextId());
-            }
-            return baseIdEntity;
-        };
-    }
 
 }

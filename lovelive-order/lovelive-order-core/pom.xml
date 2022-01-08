@@ -15,5 +15,11 @@
     <maven.compiler.source>11</maven.compiler.source>
     <maven.compiler.target>11</maven.compiler.target>
   </properties>
-
+  <dependencies>
+    <dependency>
+      <groupId>top.yang</groupId>
+      <artifactId>atomic-core</artifactId>
+      <version>1.0-SNAPSHOT</version>
+    </dependency>
+  </dependencies>
 </project>

@@ -7,6 +7,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import top.yang.web.controller.BaseController;
 @Controller
 @RequestMapping()
-public class SysNoticeController extends BaseController {
+public class SysMenuController extends BaseController {
 
 }

@@ -1,5 +1,5 @@
 package top.yang.manager;
-import top.yang.domain.dto.SysDictDataDto;
-public interface SysDictDataManager extends BaseManager<SysDictDataDto, Long> {
+import top.yang.domain.entity.SysDictData;
+public interface SysDictDataManager extends BaseManager<SysDictData, Long> {
 
 }

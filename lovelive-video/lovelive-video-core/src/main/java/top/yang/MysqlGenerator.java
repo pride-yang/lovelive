@@ -9,7 +9,6 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Locale;
 import lombok.SneakyThrows;
 import top.yang.string.StringUtils;
 
@@ -18,12 +17,12 @@ import top.yang.string.StringUtils;
  */
 public class MysqlGenerator {
 
-    private static final String API = "lovelive-system/lovelive-system-api";
-    private static final String CORE = "lovelive-system/lovelive-system-core";
+    private static final String API = "lovelive-system-api";
+    private static final String CORE = "lovelive-system-core";
 
     public static void main(String[] args) {
 
-        String[] tables = new String[]{"sys_menu","sys_menu","sys_role","sys_user","sys_config","sys_dict_data","sys_dict_type"};
+        String[] tables = new String[]{"sys_role", "sys_notice", "sys_dict_type", "sys_dict_data", "sys_config"};
         for (String s : tables) {
             createComponent(s);
             createController(s);
@@ -101,10 +100,10 @@ public class MysqlGenerator {
         StringBuffer stringBuffer = new StringBuffer();
         stringBuffer.append("package top.yang.manager;\n");
 
-        stringBuffer.append("import top.yang.domain.entity.").append(underlineToHump(table, false)).append(";\n");
+        stringBuffer.append("import top.yang.domain.dto.").append(underlineToHump(table, false)).append("Dto;\n");
 
         stringBuffer.append("public interface ").append(underlineToHump(table, false)).append("Manager extends BaseManager<").append(underlineToHump(table, false))
-                .append(", Long> {\n");
+                .append("Dto, Long> {\n");
         stringBuffer.append("\n");
         stringBuffer.append("}");
         writeFile(System.getProperty("user.dir") + File.separator + API + "/src/main/java/top/yang/manager/" + underlineToHump(table, false) + "Manager.java",
@@ -117,13 +116,13 @@ public class MysqlGenerator {
         stringBuffer.append("import top.yang.component.").append(underlineToHump(table, false)).append("Component;\n");
         stringBuffer.append("import top.yang.manager.").append(underlineToHump(table, false)).append("Manager;\n");
         stringBuffer.append("import top.yang.domain.entity.").append(underlineToHump(table, false)).append(";\n");
-        stringBuffer.append("import top.yang.domain.entity.").append(underlineToHump(table, false)).append(";\n");
+        stringBuffer.append("import top.yang.domain.dto.").append(underlineToHump(table, false)).append("Dto;\n");
         stringBuffer.append("import org.springframework.stereotype.Component;\n");
 
         stringBuffer.append("@Component\n");
         stringBuffer.append("public class ").append(underlineToHump(table, false)).append("ManagerImpl extends BaseManagerImpl<").append(underlineToHump(table, false))
                 .append("Component, ")
-                .append(underlineToHump(table, false)).append(", Long> implements ").append(underlineToHump(table, false)).append("Manager {\n");
+                .append(underlineToHump(table, false)).append("Dto, Long> implements ").append(underlineToHump(table, false)).append("Manager {\n");
 
         stringBuffer.append("    @Override\n"
                 + "    public Class getEntityClass() {\n");
@@ -139,7 +138,6 @@ public class MysqlGenerator {
         stringBuffer.append("package top.yang.service;\n");
         stringBuffer.append("\n");
         stringBuffer.append("import top.yang.domain.entity.").append(underlineToHump(table, false)).append(";\n");
-        stringBuffer.append("import top.yang.domain.dto.").append(underlineToHump(table, false)).append("Dto;\n");
         stringBuffer.append("import org.springframework.beans.factory.annotation.Autowired;\n"
                 + "import org.springframework.stereotype.Service;" + "\n");
         stringBuffer.append("\n/**\n * @author PrideYang\n */");
@@ -155,7 +153,7 @@ public class MysqlGenerator {
     public static void createDomain(String table) {
         StringBuffer stringBuffer = new StringBuffer();
         stringBuffer.append("package top.yang.domain.entity;").append("\n");
-        stringBuffer.append("import java.util.Date;" + "\n");
+        stringBuffer.append("import java.time.LocalDateTime;" + "\n");
         stringBuffer.append("import lombok.Data;" + "\n");
         stringBuffer.append("import org.springframework.data.annotation.Id;" + "\n");
         stringBuffer.append("import org.springframework.data.relational.core.mapping.Table;" + "\n");
@@ -199,7 +197,7 @@ public class MysqlGenerator {
     public static void createDto(String table) {
         StringBuffer stringBuffer = new StringBuffer();
         stringBuffer.append("package top.yang.domain.dto").append(";\n");
-        stringBuffer.append("import java.util.Date;" + "\n");
+        stringBuffer.append("import java.time.LocalDateTime;" + "\n");
         stringBuffer.append("import lombok.Data;" + "\n");
         stringBuffer.append("@Data\n");
         stringBuffer.append("public class ").append(underlineToHump(table, false)).append("Dto extends BaseDto {\n\n\n");
