@@ -3,12 +3,11 @@ package top.yang.component;
 import org.springframework.beans.factory.annotation.Autowired;
 import top.yang.domain.entity.SysDictData;
 import org.springframework.stereotype.Component;
-import top.yang.mapper.SysDictDataMapper;
-@Component
-public class SysDictDataComponent extends BaseJdbcComponent<SysDictDataMapper, SysDictData, Long>{
+import top.yang.mapper.SysDictDataRepository;
 
-    @Autowired
-    private SysDictDataMapper sysDictDataMapper;
+@Component
+public class SysDictDataComponent extends BaseJdbcComponent<SysDictDataRepository, SysDictData, Long>{
+
 
 
 }

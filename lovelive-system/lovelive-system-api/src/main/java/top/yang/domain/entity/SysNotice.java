@@ -13,7 +13,7 @@ public class SysNotice extends BaseEntity {
    * 公告ID
   **/
   @Id
-  private Integer noticeId;
+  private Long noticeId;
   /**
    * 公告标题
   **/

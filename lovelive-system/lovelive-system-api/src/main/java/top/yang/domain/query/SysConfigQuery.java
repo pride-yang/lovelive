@@ -1,8 +1,11 @@
 package top.yang.domain.query;
 
+import lombok.Data;
+
 /**
  * @author PrideYang
  */
+@Data
 public class SysConfigQuery extends PageQuery {
 
     /**
@@ -13,8 +16,11 @@ public class SysConfigQuery extends PageQuery {
     /**
      * 参数名称
      */
-
     private String configName;
+    /**
+     * 参数名称
+     */
+    private String configNameLike;
 
     /**
      * 参数键名

@@ -1,14 +1,17 @@
 package top.yang.component;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import top.yang.domain.entity.SysMenu;
 import org.springframework.stereotype.Component;
-import top.yang.mapper.SysMenuMapper;
+import top.yang.mapper.SysConfigRepository;
+import top.yang.mapper.SysMenuRepository;
+
+/**
+ * @author pride
+ */
 @Component
-public class SysMenuComponent extends BaseJdbcComponent<SysMenuMapper, SysMenu, Long>{
+public class SysMenuComponent extends BaseJdbcComponent<SysMenuRepository, SysMenu, Long> {
 
-    @Autowired
-    private SysMenuMapper sysMenuMapper;
+    public SysMenuComponent() {
 
-
+    }
 }

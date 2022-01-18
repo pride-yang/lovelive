@@ -3,12 +3,13 @@ package top.yang.component;
 import org.springframework.beans.factory.annotation.Autowired;
 import top.yang.domain.entity.SysRole;
 import org.springframework.stereotype.Component;
-import top.yang.mapper.SysRoleMapper;
+import top.yang.mapper.SysRoleRepository;
+
 @Component
-public class SysRoleComponent extends BaseJdbcComponent<SysRoleMapper, SysRole, Long>{
+public class SysRoleComponent extends BaseJdbcComponent<SysRoleRepository, SysRole, Long>{
 
     @Autowired
-    private SysRoleMapper sysRoleMapper;
+    private SysRoleRepository sysRoleRepository;
 
 
 }

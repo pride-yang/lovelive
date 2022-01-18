@@ -8,7 +8,7 @@ public class SysNoticeDto extends BaseDto {
   /**
    * 公告ID
   **/
-  private Integer noticeId;
+  private Long noticeId;
   /**
    * 公告标题
   **/

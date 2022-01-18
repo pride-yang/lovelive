@@ -15,9 +15,8 @@ public class MybatisNamespaceStrategy implements NamespaceStrategy {
      * @param domainType
      * @return
      */
-
     @Override
     public String getNamespace(Class<?> domainType) {
-        return "top.yang.mapper.".concat(domainType.getSimpleName()).concat("Mapper");
+        return "top.yang.mapper.".concat(domainType.getSimpleName()).concat("Repository");
     }
 }

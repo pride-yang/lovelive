@@ -3,12 +3,13 @@ package top.yang.component;
 import org.springframework.beans.factory.annotation.Autowired;
 import top.yang.domain.entity.SysUser;
 import org.springframework.stereotype.Component;
-import top.yang.mapper.SysUserMapper;
+import top.yang.mapper.SysUserRepository;
+
 @Component
-public class SysUserComponent extends BaseJdbcComponent<SysUserMapper, SysUser, Long>{
+public class SysUserComponent extends BaseJdbcComponent<SysUserRepository, SysUser, Long>{
 
     @Autowired
-    private SysUserMapper sysUserMapper;
+    private SysUserRepository sysUserRepository;
 
 
 }

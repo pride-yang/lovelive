@@ -1,11 +1,17 @@
 package top.yang.mapper;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import top.yang.domain.entity.SysMenu;
-import org.apache.ibatis.annotations.Mapper;;
-import top.yang.repository.BaseJdbcRepository;;
-@Mapper
-public interface SysMenuMapper extends BaseJdbcRepository<SysMenu, Long>{
+import org.apache.ibatis.annotations.Mapper;
 
+/**
+* @author pride
+* @description 针对表【sys_menu(菜单权限表)】的数据库操作Mapper
+* @createDate 2022-01-10 21:07:29
+* @Entity generator.domain.SysMenu
+*/@Mapper
+public interface SysMenuMapper {
 
 }
+
+
+
+

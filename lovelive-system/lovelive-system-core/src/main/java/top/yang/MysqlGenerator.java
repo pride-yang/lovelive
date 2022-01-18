@@ -9,7 +9,6 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Locale;
 import lombok.SneakyThrows;
 import top.yang.string.StringUtils;
 
@@ -29,28 +28,27 @@ public class MysqlGenerator {
             createController(s);
             createDomain(s);
             createDto(s);
-            createMapper(s);
+            createRepository(s);
             createManager(s);
             createService(s);
             createManagerImpl(s);
         }
     }
 
-    public static void createMapper(String table) {
+    public static void createRepository(String table) {
         StringBuffer stringBuffer = new StringBuffer();
         stringBuffer.append("package top.yang.mapper;\n"
                 + "\n"
                 + "import org.springframework.beans.factory.annotation.Autowired;\n");
         stringBuffer.append("import top.yang.domain.entity.").append(underlineToHump(table, false)).append(";\n");
-        stringBuffer.append("import org.apache.ibatis.annotations.Mapper;").append(";\n");
         stringBuffer.append("import top.yang.repository.BaseJdbcRepository;").append(";\n");
         stringBuffer.append("@Mapper\n");
-        stringBuffer.append("public interface ").append(underlineToHump(table, false)).append("Mapper extends BaseJdbcRepository<")
+        stringBuffer.append("public interface ").append(underlineToHump(table, false)).append("Repository extends BaseJdbcRepository<")
                 .append(underlineToHump(table, false)).append(", Long>{\n");
         stringBuffer.append("\n");
         stringBuffer.append("\n");
         stringBuffer.append("}");
-        writeFile(System.getProperty("user.dir") + File.separator + CORE + "/src/main/java/top/yang/mapper/" + underlineToHump(table, false) + "Mapper.java",
+        writeFile(System.getProperty("user.dir") + File.separator + CORE + "/src/main/java/top/yang/mapper/" + underlineToHump(table, false) + "Repository.java",
                 stringBuffer.toString());
     }
 
