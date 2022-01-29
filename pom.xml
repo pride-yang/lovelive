@@ -16,7 +16,7 @@
     <module>lovelive-gateway</module>
     <module>lovelive-system</module>
     <module>lovelive-user</module>
-    <module>lovelive-video</module>
+    <module>lovelive-content</module>
     <module>lovelive-search</module>
     <module>lovelive-order</module>
   </modules>

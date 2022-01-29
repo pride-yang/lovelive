@@ -1,23 +1,22 @@
-package top.yang.manager.impl;
+package top.yang.manager;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import top.yang.component.SysMenuComponent;
-import top.yang.domain.dto.SysMenuDto;
-import top.yang.manager.SysMenuManager;
-import top.yang.domain.entity.SysMenu;
-import top.yang.domain.entity.SysMenu;
 import org.springframework.stereotype.Component;
+import top.yang.domain.dto.SysMenuDto;
+import top.yang.domain.entity.SysMenu;
+import top.yang.manager.BaseManager;
+import top.yang.mapper.SysMenuRepository;
 
+/**
+ * @author pride
+ */
 @Component
-public class SysMenuManagerImpl extends BaseManagerImpl<SysMenuComponent, SysMenu, Long> implements SysMenuManager {
+public class SysMenuManager extends BaseManager<SysMenuRepository, SysMenu, Long> {
 
-    @Override
     public List<SysMenuDto> treeList() {
-        List<SysMenu> all = component.findAll();
+        List<SysMenu> all = findAll();
         List<SysMenuDto> menuDtoList = all.stream().filter(sysMenu -> sysMenu.getParentId().equals(0L))
                 .map(sysMenu -> covertMenuNode(sysMenu, all)).collect(Collectors.toList());
         return menuDtoList;
@@ -34,10 +33,5 @@ public class SysMenuManagerImpl extends BaseManagerImpl<SysMenuComponent, SysMen
                 .map(subMenu -> covertMenuNode(subMenu, menuList)).collect(Collectors.toList());
         node.setList(children);
         return node;
-    }
-
-    @Override
-    public Class getEntityClass() {
-        return null;
     }
 }

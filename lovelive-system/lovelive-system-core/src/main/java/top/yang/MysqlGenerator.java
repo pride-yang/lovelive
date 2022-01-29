@@ -22,136 +22,120 @@ public class MysqlGenerator {
 
     public static void main(String[] args) {
 
-        String[] tables = new String[]{"sys_menu","sys_menu","sys_role","sys_user","sys_config","sys_dict_data","sys_dict_type"};
+        String[] tables = new String[]{"sys_menu", "sys_menu", "sys_role", "sys_user", "sys_config", "sys_dict_data", "sys_dict_type"};
         for (String s : tables) {
-            createComponent(s);
             createController(s);
             createDomain(s);
             createDto(s);
             createRepository(s);
             createManager(s);
             createService(s);
-            createManagerImpl(s);
+            createConver(s);
+            createRes(s);
         }
     }
 
+    private static void createRes(String table) {
+        StringBuilder stringBuffer = new StringBuilder();
+        stringBuffer.append("package top.yang.domain.entity;").append("\n");
+        stringBuffer.append("import java.util.Date;" + "\n");
+        stringBuffer.append("import lombok.Data;" + "\n");
+
+        stringBuffer.append("@Data").append("\n");
+        stringBuffer.append("public class ").append(underlineToHump(table, false)).append(" {\n\n\n");
+        getFields(table, stringBuffer);
+        writeFile(System.getProperty("user.dir") + File.separator + CORE + "/src/main/java/top/yang/response/" + underlineToHump(table, false) + "Res.java",
+                stringBuffer.toString());
+    }
+
     public static void createRepository(String table) {
-        StringBuffer stringBuffer = new StringBuffer();
-        stringBuffer.append("package top.yang.mapper;\n"
+        String stringBuffer = "package top.yang.mapper;\n"
                 + "\n"
-                + "import org.springframework.beans.factory.annotation.Autowired;\n");
-        stringBuffer.append("import top.yang.domain.entity.").append(underlineToHump(table, false)).append(";\n");
-        stringBuffer.append("import top.yang.repository.BaseJdbcRepository;").append(";\n");
-        stringBuffer.append("@Mapper\n");
-        stringBuffer.append("public interface ").append(underlineToHump(table, false)).append("Repository extends BaseJdbcRepository<")
-                .append(underlineToHump(table, false)).append(", Long>{\n");
-        stringBuffer.append("\n");
-        stringBuffer.append("\n");
-        stringBuffer.append("}");
+                + "import org.springframework.beans.factory.annotation.Autowired;\n"
+                + "import top.yang.domain.entity." + underlineToHump(table, false) + ";\n"
+                + "import top.yang.repository.BaseJdbcRepository;" + ";\n"
+                + "@Mapper\n"
+                + "public interface " + underlineToHump(table, false) + "Repository extends BaseJdbcRepository<"
+                + underlineToHump(table, false) + ", Long>{\n"
+                + "\n"
+                + "\n"
+                + "}";
         writeFile(System.getProperty("user.dir") + File.separator + CORE + "/src/main/java/top/yang/mapper/" + underlineToHump(table, false) + "Repository.java",
-                stringBuffer.toString());
+                stringBuffer);
     }
 
-    public static void createComponent(String table) {
-        StringBuffer stringBuffer = new StringBuffer();
-        stringBuffer.append("package top.yang.component;\n"
-                + "\n"
-                + "import org.springframework.beans.factory.annotation.Autowired;\n");
-        stringBuffer.append("import top.yang.domain.entity.").append(underlineToHump(table, false)).append(";\n");
-        stringBuffer.append("import org.springframework.stereotype.Component").append(";\n");
-        stringBuffer.append("import top.yang.mapper.").append(underlineToHump(table, false)).append("Mapper;\n");
-
-        stringBuffer.append("@Component\n");
-        stringBuffer.append("public class ").append(underlineToHump(table, false)).append("Component extends BaseJdbcComponent<").append(underlineToHump(table, false))
-                .append("Mapper, ")
-                .append(underlineToHump(table, false)).append(", Long>{\n");
-        stringBuffer.append("\n");
-        stringBuffer.append("    @Autowired\n");
-        stringBuffer.append("    private ").append(underlineToHump(table, false)).append("Mapper ").append(underlineToHump(table, true)).append("Mapper;");
-        stringBuffer.append("\n");
-        stringBuffer.append("\n");
-        stringBuffer.append("\n");
-        stringBuffer.append("}");
-        writeFile(System.getProperty("user.dir") + File.separator + CORE + "/src/main/java/top/yang/component/" + underlineToHump(table, false) + "Component.java",
-                stringBuffer.toString());
-    }
 
     public static void createController(String table) {
-        StringBuffer stringBuffer = new StringBuffer();
-        stringBuffer.append("package top.yang.controller;\n"
+
+        String stringBuffer = "package top.yang.controller;\n"
                 + "\n"
                 + "import org.springframework.beans.BeanUtils;\n"
                 + "import org.springframework.beans.factory.annotation.Autowired;\n"
                 + "import org.springframework.stereotype.Controller;\n"
-                + "import org.springframework.web.bind.annotation.RequestMapping;\n");
-        stringBuffer.append("import top.yang.web.controller.BaseController;\n");
-
-        stringBuffer.append("@Controller\n");
-        stringBuffer.append("@RequestMapping()\n");
-        stringBuffer.append("public class ").append(underlineToHump(table, false)).append("Controller extends BaseController {\n");
-        stringBuffer.append("\n");
-        stringBuffer.append("}");
+                + "import org.springframework.web.bind.annotation.RequestMapping;\n"
+                + "import top.yang.web.controller.BaseController;\n"
+                + "@Controller\n"
+                + "@RequestMapping()\n"
+                + "public class " + underlineToHump(table, false) + "Controller extends BaseController {\n"
+                + "\n"
+                + "}";
         writeFile(System.getProperty("user.dir") + File.separator + CORE + "/src/main/java/top/yang/controller/" + underlineToHump(table, false) + "Controller.java",
-                stringBuffer.toString());
+                stringBuffer);
     }
 
     public static void createManager(String table) {
         StringBuffer stringBuffer = new StringBuffer();
         stringBuffer.append("package top.yang.manager;\n");
-
-        stringBuffer.append("import top.yang.domain.entity.").append(underlineToHump(table, false)).append(";\n");
-
-        stringBuffer.append("public interface ").append(underlineToHump(table, false)).append("Manager extends BaseManager<").append(underlineToHump(table, false))
-                .append(", Long> {\n");
-        stringBuffer.append("\n");
-        stringBuffer.append("}");
-        writeFile(System.getProperty("user.dir") + File.separator + API + "/src/main/java/top/yang/manager/" + underlineToHump(table, false) + "Manager.java",
-                stringBuffer.toString());
-    }
-
-    public static void createManagerImpl(String table) {
-        StringBuffer stringBuffer = new StringBuffer();
-        stringBuffer.append("package top.yang.manager.impl;\n");
-        stringBuffer.append("import top.yang.component.").append(underlineToHump(table, false)).append("Component;\n");
         stringBuffer.append("import top.yang.manager.").append(underlineToHump(table, false)).append("Manager;\n");
         stringBuffer.append("import top.yang.domain.entity.").append(underlineToHump(table, false)).append(";\n");
-        stringBuffer.append("import top.yang.domain.entity.").append(underlineToHump(table, false)).append(";\n");
+        stringBuffer.append("import top.yang.domain.dto.").append(underlineToHump(table, false)).append("Dto;\n");
         stringBuffer.append("import org.springframework.stereotype.Component;\n");
 
         stringBuffer.append("@Component\n");
-        stringBuffer.append("public class ").append(underlineToHump(table, false)).append("ManagerImpl extends BaseManagerImpl<").append(underlineToHump(table, false))
-                .append("Component, ")
-                .append(underlineToHump(table, false)).append(", Long> implements ").append(underlineToHump(table, false)).append("Manager {\n");
-
-        stringBuffer.append("    @Override\n"
-                + "    public Class getEntityClass() {\n");
-        stringBuffer.append("        return ").append(underlineToHump(table, false)).append(".class;\n");
-        stringBuffer.append("    }");
+        stringBuffer.append("public class ").append(underlineToHump(table, false)).append("Manager {\n");
         stringBuffer.append("\n}");
-        writeFile(System.getProperty("user.dir") + File.separator + CORE + "/src/main/java/top/yang/manager/impl/" + underlineToHump(table, false) + "ManagerImpl.java",
+        writeFile(System.getProperty("user.dir") + File.separator + CORE + "/src/main/java/top/yang/manager/" + underlineToHump(table, false) + "ManagerImpl.java",
                 stringBuffer.toString());
     }
 
     public static void createService(String table) {
-        StringBuffer stringBuffer = new StringBuffer();
-        stringBuffer.append("package top.yang.service;\n");
-        stringBuffer.append("\n");
-        stringBuffer.append("import top.yang.domain.entity.").append(underlineToHump(table, false)).append(";\n");
-        stringBuffer.append("import top.yang.domain.dto.").append(underlineToHump(table, false)).append("Dto;\n");
-        stringBuffer.append("import org.springframework.beans.factory.annotation.Autowired;\n"
-                + "import org.springframework.stereotype.Service;" + "\n");
-        stringBuffer.append("\n/**\n * @author PrideYang\n */");
-        stringBuffer.append("@Service\n");
-        stringBuffer.append("public class ").append(underlineToHump(table, false)).append("Service {\n");
-        stringBuffer.append("\n");
-        stringBuffer.append("}");
+        String stringBuffer = "package top.yang.service;\n"
+                + "\n"
+                + "import top.yang.domain.entity." + underlineToHump(table, false) + ";\n"
+                + "import top.yang.domain.dto." + underlineToHump(table, false) + "Dto;\n"
+                + "import org.springframework.beans.factory.annotation.Autowired;\n"
+                + "import org.springframework.stereotype.Service;" + "\n"
+                + "\n/**\n * @author PrideYang\n */"
+                + "@Service\n"
+                + "public class " + underlineToHump(table, false) + "Service {\n"
+                + "\n"
+                + "}";
         writeFile(System.getProperty("user.dir") + File.separator + CORE + "/src/main/java/top/yang/service/" + underlineToHump(table, false) + "Service.java",
-                stringBuffer.toString());
+                stringBuffer);
     }
 
+    public static void createConver(String table) {
+
+        String stringBuffer = "package top.yang.convers;\n" + "\n" + "import java.util.List;\n" + "import org.mapstruct.Mapper;\n" + "import org.mapstruct.Mapping;\n"
+                + "import org.mapstruct.factory.Mappers;\n" + "import top.yang.domain.dto.PageResult;\n" + "import top.yang.domain.dto."
+                + underlineToHump(table, false)
+                + "Dto;\n" + "import top.yang.domain.entity." + underlineToHump(table, false) + ";\n" + "import top.yang.response."
+                + underlineToHump(table, false) + "Res;\n" + "\n" + "/**\n" + " * @author pride\n" + " */\n" + "@Mapper\n"
+                + "public interface " + underlineToHump(table, false) + "Conver {\n" + "\n" + "    " + underlineToHump(table, false)
+                + "Conver INSTANCE = Mappers.getMapper(" + underlineToHump(table, false) + "Conver.class);\n" + "\n" + "    "
+                + underlineToHump(table, false) + "Dto entityToDto(" + underlineToHump(table, false) + " entity);\n" + "\n" + "    "
+                + underlineToHump(table, false) + "Res dtoToRes(" + underlineToHump(table, false) + "Dto dto);\n" + "\n" + "    List<"
+                + underlineToHump(table, false) + "Dto> entityToDtoList(List<" + underlineToHump(table, false) + "> entities);\n" + "\n"
+                + "    List<" + underlineToHump(table, false) + "Res> dtoToResList(List<" + underlineToHump(table, false) + "Dto> dtos);\n"
+                + "\n" + "    PageResult<" + underlineToHump(table, false) + "Dto> entityToDtoPage(PageResult<" + underlineToHump(table, false)
+                + "> pageResult);\n" + "\n" + "    PageResult<" + underlineToHump(table, false) + "Res> dtoToResPage(PageResult<"
+                + underlineToHump(table, false) + "Dto> pageResult);\n" + "\n" + "\n" + "}";
+        writeFile(System.getProperty("user.dir") + File.separator + CORE + "/src/main/java/top/yang/conver/" + underlineToHump(table, false) + "Conver.java",
+                stringBuffer);
+    }
 
     public static void createDomain(String table) {
-        StringBuffer stringBuffer = new StringBuffer();
+        StringBuilder stringBuffer = new StringBuilder();
         stringBuffer.append("package top.yang.domain.entity;").append("\n");
         stringBuffer.append("import java.util.Date;" + "\n");
         stringBuffer.append("import lombok.Data;" + "\n");
@@ -161,6 +145,12 @@ public class MysqlGenerator {
 
         stringBuffer.append("@Data\n@Table(\"").append(table).append("\")\n");
         stringBuffer.append("public class ").append(underlineToHump(table, false)).append(" extends BaseEntity {\n\n\n");
+        getFields(table, stringBuffer);
+        writeFile(System.getProperty("user.dir") + File.separator + API + "/src/main/java/top/yang/domain/entity/" + underlineToHump(table, false) + ".java",
+                stringBuffer.toString());
+    }
+
+    private static void getFields(String table, StringBuilder stringBuffer) {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/love_system", "root", "yzh19981204mysql");
@@ -187,15 +177,14 @@ public class MysqlGenerator {
                 stringBuffer.append("  private ").append(getFieldType(dataType)).append(" ").append(underlineToHump(columnName, true)).append(";\n");
             }
             stringBuffer.append("}");
-            writeFile(System.getProperty("user.dir") + File.separator + API + "/src/main/java/top/yang/domain/entity/" + underlineToHump(table, false) + ".java",
-                    stringBuffer.toString());
+
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
     }
 
     public static void createDto(String table) {
-        StringBuffer stringBuffer = new StringBuffer();
+        StringBuilder stringBuffer = new StringBuilder();
         stringBuffer.append("package top.yang.domain.dto").append(";\n");
         stringBuffer.append("import java.util.Date;" + "\n");
         stringBuffer.append("import lombok.Data;" + "\n");

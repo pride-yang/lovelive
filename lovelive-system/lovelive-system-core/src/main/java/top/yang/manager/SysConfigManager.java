@@ -1,11 +1,12 @@
-package top.yang.component;
+package top.yang.manager;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import top.yang.domain.dto.PageResult;
 import top.yang.domain.entity.SysConfig;
-import org.springframework.stereotype.Component;
 import top.yang.domain.query.SysConfigQuery;
+import top.yang.manager.BaseManager;
 import top.yang.mapper.SysConfigMapper;
 import top.yang.mapper.SysConfigRepository;
 import top.yang.utils.PageUtils;
@@ -14,7 +15,7 @@ import top.yang.utils.PageUtils;
  * @author pride
  */
 @Component
-public class SysConfigComponent extends BaseJdbcComponent<SysConfigRepository, SysConfig, Long> {
+public class SysConfigManager extends BaseManager<SysConfigRepository, SysConfig, Long> {
 
     @Autowired
     private SysConfigMapper mapper;

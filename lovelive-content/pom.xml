@@ -8,17 +8,17 @@
     <groupId>top.yang</groupId>
     <version>1.0-SNAPSHOT</version>
   </parent>
-  <artifactId>lovelive-video</artifactId>
+  <artifactId>lovelive-content</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <name>lovelive-video</name>
+  <name>lovelive-content</name>
   <packaging>pom</packaging>
-  <description>lovelive-video</description>
+  <description>lovelive-content</description>
   <properties>
     <java.version>11</java.version>
   </properties>
   <modules>
-    <module>lovelive-video-api</module>
-    <module>lovelive-video-core</module>
+    <module>lovelive-content-api</module>
+    <module>lovelive-content-core</module>
   </modules>
   <dependencies>
     <dependency>
