@@ -15,6 +15,8 @@ import top.yang.domain.dto.SysDictTypeDto;
 import top.yang.domain.query.SysDictDataQuery;
 import top.yang.domain.query.SysDictQuery;
 import top.yang.domain.query.SysDictTypeQuery;
+import top.yang.request.SysDictDataReq;
+import top.yang.request.SysDictTypeReq;
 import top.yang.response.SysDictDataRes;
 import top.yang.response.SysDictTypeRes;
 import top.yang.service.SysDictService;
@@ -30,20 +32,33 @@ public class SysDictController extends BaseController {
     @Autowired
     private SysDictService dictService;
 
+    @PostMapping("/type/list")
+    @ResponseBody
+    public PageResult<SysDictTypeRes> typeList(@RequestBody SysDictTypeQuery dictQuery) {
+        PageResult<SysDictTypeDto> list = dictService.findDictTypeByPage(dictQuery);
+        return SysDictConver.INSTANCE.typeDtoToResPage(list);
+    }
+
+    @PostMapping("/type/saveOrUpdate")
+    @ResponseBody
+    public void updateType(@RequestBody SysDictTypeReq dictTypeReq) {
+        SysDictTypeDto dto = SysDictConver.INSTANCE.typeReqToDto(dictTypeReq);
+        dictService.updateType(dto);
+    }
 
     @PostMapping("/data/list")
     @ResponseBody
     public PageResult<SysDictDataRes> dataList(@RequestBody SysDictDataQuery dictQuery) {
         PageResult<SysDictDataDto> list = dictService.findDictDataByPage(dictQuery);
-
         return SysDictConver.INSTANCE.dataDtoToResPage(list);
     }
 
-    @PostMapping("/type/list")
+    @PostMapping("/data/saveOrUpdate")
     @ResponseBody
-    public PageResult<SysDictTypeRes> typeList(@RequestBody SysDictTypeQuery dictQuery) {
-        PageResult<SysDictTypeDto> list = dictService.findDictTypeByPage(dictQuery);
-
-        return SysDictConver.INSTANCE.typeDtoToResPage(list);
+    public void updateData(@RequestBody SysDictDataReq dictDataReq) {
+        SysDictDataDto dto = SysDictConver.INSTANCE.dataReqToDto(dictDataReq);
+        dictService.updateData(dto);
     }
+
+
 }

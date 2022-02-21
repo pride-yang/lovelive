@@ -5,7 +5,8 @@ import org.mapstruct.factory.Mappers;
 import top.yang.domain.dto.PageResult;
 import top.yang.domain.dto.SysDictDataDto;
 import top.yang.domain.dto.SysDictTypeDto;
-import top.yang.domain.entity.SysDictData;
+import top.yang.request.SysDictDataReq;
+import top.yang.request.SysDictTypeReq;
 import top.yang.response.SysDictDataRes;
 import top.yang.response.SysDictTypeRes;
 
@@ -25,4 +26,9 @@ public interface SysDictConver {
     PageResult<SysDictDataRes> dataDtoToResPage(PageResult<SysDictDataDto> sysDictDataDtoPageResult);
 
     PageResult<SysDictTypeRes> typeDtoToResPage(PageResult<SysDictTypeDto> list);
+
+    SysDictDataDto dataReqToDto(SysDictDataReq sysDictDataReq);
+
+
+    SysDictTypeDto typeReqToDto(SysDictTypeReq dictTypeReq);
 }

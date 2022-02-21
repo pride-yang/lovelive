@@ -37,4 +37,12 @@ public class SysDictService {
     public PageResult<SysDictDataDto> findByPage(SysDictQuery dictQuery) {
         return null;
     }
+
+    public void updateData(SysDictDataDto dto) {
+
+    }
+
+    public void updateType(SysDictTypeDto dto) {
+
+    }
 }

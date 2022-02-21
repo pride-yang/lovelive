@@ -6,7 +6,6 @@ import org.springframework.data.jdbc.mybatis.NamespaceStrategy;
 /**
  * @author PrideYang
  */
-@Configuration
 public class MybatisNamespaceStrategy implements NamespaceStrategy {
 
     /**
